@@ -29,5 +29,11 @@ public class administrador {
 
             }
         });
+        gestionDeUsuariosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new gestionUsuarios();
+            }
+        });
     }
 }
