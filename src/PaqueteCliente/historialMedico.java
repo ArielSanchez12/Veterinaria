@@ -1,8 +1,10 @@
 package PaqueteCliente;
-import PaqueteRecursos.conexion;
 
+import PaqueteRecursos.conexion;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -29,7 +31,10 @@ public class historialMedico extends conexion {
         };
         Table.setModel(tableModel);
 
-        // cargar el historial médico
+        // Asignar el renderizador personalizado para la columna de fotos
+        Table.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
+
+        // Cargar el historial médico
         verHistorialMedicoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,7 +42,7 @@ public class historialMedico extends conexion {
             }
         });
 
-        // regresar
+        // Regresar
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,7 +70,7 @@ public class historialMedico extends conexion {
         tableModel.setRowCount(0);
 
         try (Connection conn = connect()) {
-            String sql = "SELECT tipo_mascota, nombre_mascota, sexo_mascota, tipo_servicio FROM agendar_citas";
+            String sql = "SELECT tipo_mascota, nombre_mascota, foto_mascota, sexo_mascota, tipo_servicio FROM agendar_citas";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
 
@@ -74,9 +79,17 @@ public class historialMedico extends conexion {
                 String nombreMascota = rs.getString("nombre_mascota");
                 String sexoMascota = rs.getString("sexo_mascota");
                 String tipoServicio = rs.getString("tipo_servicio");
+                byte[] fotoBytes = rs.getBytes("foto_mascota");
+
+                // Convertir los bytes de la foto en un ImageIcon
+                ImageIcon imagen = null;
+                if (fotoBytes != null) {
+                    Image img = Toolkit.getDefaultToolkit().createImage(fotoBytes);
+                    imagen = new ImageIcon(img.getScaledInstance(100, 100, Image.SCALE_SMOOTH)); // Ajustar tamaño
+                }
 
                 // Agregar fila a la tabla
-                tableModel.addRow(new Object[]{tipoMascota, nombreMascota, "Foto Disponible", sexoMascota, tipoServicio});
+                tableModel.addRow(new Object[]{tipoMascota, nombreMascota, imagen, sexoMascota, tipoServicio});
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -103,11 +116,32 @@ public class historialMedico extends conexion {
                 int filasActualizadas = pstmt.executeUpdate();
                 if (filasActualizadas > 0) {
                     JOptionPane.showMessageDialog(null, "Foto actualizada correctamente.");
+                    cargarHistorialMedico(); // Refrescar la tabla
                 }
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Error al actualizar la foto.");
             }
+        }
+    }
+
+    // Clase para renderizar imágenes en la tabla
+    public static class ImageRenderer extends JLabel implements TableCellRenderer {
+        public ImageRenderer() {
+            setHorizontalAlignment(JLabel.CENTER);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus,
+                                                       int row, int column) {
+            if (value instanceof ImageIcon) {
+                setIcon((ImageIcon) value);
+            } else {
+                setText(value != null ? value.toString() : "");
+                setIcon(null);
+            }
+            return this;
         }
     }
 }
