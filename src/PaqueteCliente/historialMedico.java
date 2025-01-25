@@ -11,22 +11,23 @@ public class historialMedico extends conexion {
     public JPanel PHistorial;
     public JButton verHistorialMedicoButton;
     public JButton regresarButton;
-    public JScrollPane HISTORIAL;
+    public JScrollPane HISTORIAL; // ScrollPane para contener la tabla
 
     public historialMedico() {
 
+        // Configurar el botón para cargar el historial médico
         verHistorialMedicoButton.addActionListener(e -> cargarHistorialMedico());
         regresarButton.addActionListener(e -> new cliente());
     }
 
     private void cargarHistorialMedico() {
         try (Connection conn = connect()) {
-            String sql = "SELECT tipo_mascota, nombre_mascota, foto_mascota, sexo_mascota, tipo_servicio, motivo_cita FROM agendar_citas";
+            String sql = "SELECT cedula, tipo_mascota, nombre_mascota, foto_mascota, sexo_mascota, tipo_servicio, motivo_cita FROM agendar_citas";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
 
-            // Crear el modelo de tabla
-            String[] columnas = {"Tipo Mascota", "Nombre Mascota", "Sexo", "Tipo Servicio", "Motivo", "Foto"};
+            // Crear el modelo de tabla con la columna de cédula incluida
+            String[] columnas = {"Cedula", "Tipo Mascota", "Nombre Mascota", "Sexo", "Tipo Servicio", "Motivo", "Foto"};
             DefaultTableModel modeloTabla = new DefaultTableModel(null, columnas) {
                 @Override
                 public boolean isCellEditable(int row, int column) {
@@ -37,6 +38,7 @@ public class historialMedico extends conexion {
             // Cargar los datos en el modelo de la tabla
             while (rs.next()) {
                 // Recuperar los datos de la base de datos
+                String cedulaCliente = rs.getString("cedula");
                 String tipoMascota = rs.getString("tipo_mascota");
                 String nombreMascota = rs.getString("nombre_mascota");
                 String sexoMascota = rs.getString("sexo_mascota");
@@ -52,8 +54,8 @@ public class historialMedico extends conexion {
                     foto = new ImageIcon(imgEscalada);
                 }
 
-                // Agregar una fila al modelo de la tabla
-                modeloTabla.addRow(new Object[]{tipoMascota, nombreMascota, sexoMascota, tipoServicio, motivoCita, foto});
+                // Agregar una fila al modelo de la tabla (incluyendo la cédula)
+                modeloTabla.addRow(new Object[]{cedulaCliente, tipoMascota, nombreMascota, sexoMascota, tipoServicio, motivoCita, foto});
             }
 
             // Crear la tabla con el modelo

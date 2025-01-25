@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 import PaqueteRecursos.conexion;
 
-public class agendarCitas extends conexion {
+public class registrarMascota extends conexion {
     public JPanel PAgendar;
     public JTextField textField1; // Cedula
     public JTextField textField2; // Tipo Mascota
@@ -33,7 +33,7 @@ public class agendarCitas extends conexion {
 
     public File fotoMascota; // Archivo seleccionado
 
-    public agendarCitas() {
+    public registrarMascota() {
         subirFotoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
