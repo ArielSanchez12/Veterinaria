@@ -26,7 +26,6 @@ public class agendarCitas extends conexion {
     public JCheckBox hembraCheckBox;
     public JCheckBox machoCheckBox;
     public JTextField textField4; // Motivo Cita
-    public JTextField textField5; // Costo
     public JTextArea textArea1; // Observaciones
     public JButton agendarCitaButton;
     public JButton regresarButton;
@@ -60,13 +59,6 @@ public class agendarCitas extends conexion {
                 String sexoMascota = hembraCheckBox.isSelected() ? "hembra" : machoCheckBox.isSelected() ? "macho" : "";
                 String motivoCita = textField4.getText();
                 String observaciones = textArea1.getText();
-                double costo;
-                try {
-                    costo = Double.parseDouble(textField5.getText());
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Ingrese un costo válido.");
-                    return;
-                }
 
                 // Obtener tipo de servicio seleccionado
                 String tipoServicio = "";
@@ -88,8 +80,8 @@ public class agendarCitas extends conexion {
 
                 try (Connection conn = connect()) {
                     String sql = "INSERT INTO agendar_citas (cedula, tipo_mascota, nombre_mascota, " +
-                            "foto_mascota, sexo_mascota, tipo_servicio, motivo_cita, costo, observaciones) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                            "foto_mascota, sexo_mascota, tipo_servicio, motivo_cita, observaciones) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                     PreparedStatement pstmt = conn.prepareStatement(sql);
 
                     pstmt.setString(1, cedulaCliente);
@@ -103,8 +95,7 @@ public class agendarCitas extends conexion {
                     pstmt.setString(5, sexoMascota);
                     pstmt.setString(6, tipoServicio);
                     pstmt.setString(7, motivoCita);
-                    pstmt.setDouble(8, costo);
-                    pstmt.setString(9, observaciones);
+                    pstmt.setString(8, observaciones);
 
                     pstmt.execute();
                     JOptionPane.showMessageDialog(null, "Cita registrada correctamente.");
@@ -114,7 +105,6 @@ public class agendarCitas extends conexion {
                     textField2.setText("");
                     textField3.setText("");
                     textField4.setText("");
-                    textField5.setText("");
                     textArea1.setText("");
                     hembraCheckBox.setSelected(false);
                     machoCheckBox.setSelected(false);
