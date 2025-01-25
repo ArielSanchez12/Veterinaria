@@ -1,4 +1,5 @@
 package PaqueteAdministrador;
+import PaqueteRecursos.login;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,6 +34,14 @@ public class administrador {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new gestionUsuarios();
+            }
+        });
+
+
+        regresarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new login();
             }
         });
     }

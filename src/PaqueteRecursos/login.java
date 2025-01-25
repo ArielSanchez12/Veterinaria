@@ -20,6 +20,7 @@ public class login extends conexion {
     private JPasswordField passwordField1;
     private JComboBox comboBox1;
     private JButton ingresarButton;
+    private JButton regresarButton;
 
     public login() {
 
@@ -81,6 +82,13 @@ public class login extends conexion {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Error en clever cloud");
                 }
+            }
+        });
+
+        regresarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new inicio();
             }
         });
     }
