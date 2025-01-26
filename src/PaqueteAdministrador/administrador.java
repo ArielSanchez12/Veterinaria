@@ -37,6 +37,12 @@ public class administrador {
             }
         });
 
+        estadisticasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new estadisticas();
+            }
+        });
 
         regresarButton.addActionListener(new ActionListener() {
             @Override
@@ -44,5 +50,6 @@ public class administrador {
                 new login();
             }
         });
+
     }
 }

@@ -98,6 +98,29 @@ public class registrarMascota extends conexion {
                     pstmt.setString(8, observaciones);
 
                     pstmt.execute();
+
+                    // ACTUALIZAR ESTADÍSTICAS
+                    // 1. Actualizar el conteo de tipo de servicio
+                    String sqlUpdateServicio = "INSERT INTO estadisticas (categoria, valor, cantidad) VALUES ('servicio', ?, 1) " +
+                            "ON DUPLICATE KEY UPDATE cantidad = cantidad + 1";
+                    PreparedStatement pstmtServicio = conn.prepareStatement(sqlUpdateServicio);
+                    pstmtServicio.setString(1, tipoServicio);
+                    pstmtServicio.executeUpdate();
+
+                    // 2. Actualizar el conteo de sexo de la mascota
+                    String sqlUpdateSexo = "INSERT INTO estadisticas (categoria, valor, cantidad) VALUES ('sexo', ?, 1) " +
+                            "ON DUPLICATE KEY UPDATE cantidad = cantidad + 1";
+                    PreparedStatement pstmtSexo = conn.prepareStatement(sqlUpdateSexo);
+                    pstmtSexo.setString(1, sexoMascota);
+                    pstmtSexo.executeUpdate();
+
+                    // 3. Actualizar el conteo de tipo de mascota
+                    String sqlUpdateMascota = "INSERT INTO estadisticas (categoria, valor, cantidad) VALUES ('tipo_mascota', ?, 1) " +
+                            "ON DUPLICATE KEY UPDATE cantidad = cantidad + 1";
+                    PreparedStatement pstmtMascota = conn.prepareStatement(sqlUpdateMascota);
+                    pstmtMascota.setString(1, tipoMascota);
+                    pstmtMascota.executeUpdate();
+
                     JOptionPane.showMessageDialog(null, "Cita registrada correctamente.");
 
                     // Limpiar campos
