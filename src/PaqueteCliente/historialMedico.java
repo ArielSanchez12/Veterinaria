@@ -1,10 +1,15 @@
 package PaqueteCliente;
 
 import PaqueteRecursos.conexion;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
 import java.sql.*;
 
 public class historialMedico extends conexion {
@@ -12,12 +17,21 @@ public class historialMedico extends conexion {
     public JButton verHistorialMedicoButton;
     public JButton regresarButton;
     public JScrollPane HISTORIAL; // ScrollPane para contener la tabla
+    public JButton imprimirPDFButton;
 
     public historialMedico() {
-
         // Configurar el botón para cargar el historial médico
         verHistorialMedicoButton.addActionListener(e -> cargarHistorialMedico());
+
         regresarButton.addActionListener(e -> new cliente());
+
+        // Acción para el botón de imprimir PDF
+        imprimirPDFButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imprimirPDF();
+            }
+        });
     }
 
     private void cargarHistorialMedico() {
@@ -37,7 +51,6 @@ public class historialMedico extends conexion {
 
             // Cargar los datos en el modelo de la tabla
             while (rs.next()) {
-                // Recuperar los datos de la base de datos
                 String cedulaCliente = rs.getString("cedula");
                 String tipoMascota = rs.getString("tipo_mascota");
                 String nombreMascota = rs.getString("nombre_mascota");
@@ -50,15 +63,13 @@ public class historialMedico extends conexion {
                 ImageIcon foto = null;
                 if (fotoBytes != null) {
                     ImageIcon imagen = new ImageIcon(fotoBytes);
-                    Image imgEscalada = imagen.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                    java.awt.Image imgEscalada = imagen.getImage().getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
                     foto = new ImageIcon(imgEscalada);
                 }
 
-                // Agregar una fila al modelo de la tabla (incluyendo la cédula)
                 modeloTabla.addRow(new Object[]{cedulaCliente, tipoMascota, nombreMascota, sexoMascota, tipoServicio, motivoCita, foto});
             }
 
-            // Crear la tabla con el modelo
             JTable tabla = new JTable(modeloTabla);
 
             // Personalizar el renderizado de la columna de fotos
@@ -66,32 +77,96 @@ public class historialMedico extends conexion {
                 @Override
                 public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                                boolean hasFocus, int row, int column) {
-                    // Si la celda contiene una imagen, mostrarla en un JLabel
                     if (value instanceof ImageIcon) {
                         JLabel etiquetaImagen = new JLabel((ImageIcon) value);
                         etiquetaImagen.setHorizontalAlignment(SwingConstants.CENTER);
                         return etiquetaImagen;
                     }
-                    // Si no hay imagen, mostrar "Sin Imagen"
                     JLabel etiquetaTexto = new JLabel("Sin Imagen");
                     etiquetaTexto.setHorizontalAlignment(SwingConstants.CENTER);
                     return etiquetaTexto;
                 }
             });
 
-            // Configurar la tabla para que sea más agradable
-            tabla.setRowHeight(120); // Altura de las filas para acomodar imágenes grandes
+            tabla.setRowHeight(120);
             tabla.setFillsViewportHeight(true);
 
-            // Agregar la tabla a un JScrollPane
-            JScrollPane scrollTabla = new JScrollPane(tabla);
-
-            // Limpiar el contenido anterior del panel HISTORIAL
-            HISTORIAL.setViewportView(scrollTabla);
+            HISTORIAL.setViewportView(tabla);
 
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al cargar el historial médico.");
+        }
+    }
+
+    private void imprimirPDF() {
+        try (Connection conn = connect()) {
+            // Crear un documento PDF
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream("HistorialMedico.pdf"));
+            document.open();
+
+            // Agregar título al PDF
+            document.add(new Paragraph("Historial Médico de Mascotas", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK)));
+            document.add(new Paragraph(" ")); // Espacio
+
+            // Leer los datos desde la base de datos
+            String sql = "SELECT cedula, tipo_mascota, nombre_mascota, sexo_mascota, tipo_servicio, motivo_cita, foto_mascota FROM agendar_citas";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            // Crear tabla en el PDF con las mismas columnas que en la base de datos
+            PdfPTable pdfTable = new PdfPTable(7); // Número de columnas
+            pdfTable.setWidthPercentage(100);
+            pdfTable.setSpacingBefore(10f);
+
+            // Agregar encabezados de columna
+            pdfTable.addCell(new PdfPCell(new Phrase("Cédula", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+            pdfTable.addCell(new PdfPCell(new Phrase("Tipo Mascota", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+            pdfTable.addCell(new PdfPCell(new Phrase("Nombre Mascota", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+            pdfTable.addCell(new PdfPCell(new Phrase("Sexo", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+            pdfTable.addCell(new PdfPCell(new Phrase("Tipo Servicio", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+            pdfTable.addCell(new PdfPCell(new Phrase("Motivo Cita", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+            pdfTable.addCell(new PdfPCell(new Phrase("Foto", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+
+            // Agregar filas con los datos obtenidos
+            while (rs.next()) {
+                pdfTable.addCell(rs.getString("cedula"));
+                pdfTable.addCell(rs.getString("tipo_mascota"));
+                pdfTable.addCell(rs.getString("nombre_mascota"));
+                pdfTable.addCell(rs.getString("sexo_mascota"));
+                pdfTable.addCell(rs.getString("tipo_servicio"));
+                pdfTable.addCell(rs.getString("motivo_cita"));
+
+                // Manejar la imagen (si existe)
+                byte[] fotoBytes = rs.getBytes("foto_mascota");
+                if (fotoBytes != null && fotoBytes.length > 0) {
+                    try {
+                        // Convertir los bytes en una imagen compatible con iText
+                        com.itextpdf.text.Image img = com.itextpdf.text.Image.getInstance(fotoBytes);
+                        img.scaleToFit(50, 50); // Ajustar tamaño
+                        PdfPCell imgCell = new PdfPCell(img);
+                        imgCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                        pdfTable.addCell(imgCell);
+                    } catch (Exception e) {
+                        // Manejar imágenes no válidas
+                        pdfTable.addCell("Imagen no válida");
+                    }
+                } else {
+                    pdfTable.addCell("Sin Imagen");
+                }
+            }
+
+            // Agregar la tabla al documento
+            document.add(pdfTable);
+
+            // Cerrar el documento
+            document.close();
+            JOptionPane.showMessageDialog(null, "PDF generado exitosamente: HistorialMedico.pdf");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al generar el PDF.");
         }
     }
 }
