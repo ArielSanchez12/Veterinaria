@@ -7,18 +7,17 @@ import java.awt.event.ActionListener;
 
 public class veterinario {
     public JPanel PVeterinario;
-    private JButton gestiónDeCitasButton;
-    private JButton diagnosticosYTratamientosButton;
-    private JButton historialMédicoDeMascotasButton;
-    private JButton salirButton;
+    public JButton gestiónDeCitasButton;
+    public JButton diagnosticosYTratamientosButton;
+    public JButton historialMédicoDeMascotasButton;
+    public JButton salirButton;
 
     public veterinario() {
-
         JFrame menuFrame = new JFrame("Pantalla de Usuario");
         menuFrame.setContentPane(PVeterinario);
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setSize(500, 300);
-        menuFrame.setPreferredSize(new Dimension(500, 300));
+        menuFrame.setSize(600, 600);
+        menuFrame.setPreferredSize(new Dimension(500, 500));
         menuFrame.setLocationRelativeTo(null);
         menuFrame.pack();
         menuFrame.setVisible(true);
@@ -26,7 +25,29 @@ public class veterinario {
         gestiónDeCitasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                citas ventanaCitas = new citas();
+                ventanaCitas.setVisible(true);
+            }
+        });
 
+        diagnosticosYTratamientosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Lógica para Diagnósticos y Tratamientos
+            }
+        });
+
+        historialMédicoDeMascotasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Lógica para Historial Médico
+            }
+        });
+
+        salirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
     }
