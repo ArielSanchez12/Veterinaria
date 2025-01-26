@@ -13,31 +13,34 @@ public class inicio {
 
     public inicio() {
 
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            SwingUtilities.updateComponentTreeUI(PInicio);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         JFrame menuFrame = new JFrame("Inicio");
         menuFrame.setContentPane(PInicio);
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menuFrame.setSize(500, 300);
         menuFrame.setPreferredSize(new Dimension(500, 300));
         menuFrame.setLocationRelativeTo(null);
+        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/pet-care-pro.png").getImage());
         menuFrame.pack();
         menuFrame.setVisible(true);
 
         registroParaClientesNuevosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame menuFrame = new JFrame("Crear Cuenta");
-                menuFrame.setContentPane(new registro().PRegistro);
-                menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                menuFrame.setSize(500, 300);
-                menuFrame.setPreferredSize(new Dimension(500, 300));
-                menuFrame.setLocationRelativeTo(null);
-                menuFrame.pack();
-                menuFrame.setVisible(true);
+                new registro();
+                menuFrame.dispose();
             }
         });
         inicioDeSesiónButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
                 new login();
             }
         });

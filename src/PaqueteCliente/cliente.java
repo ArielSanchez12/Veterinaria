@@ -1,5 +1,7 @@
 package PaqueteCliente;
 
+import PaqueteRecursos.login;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,8 +20,9 @@ public class cliente {
         frame.setContentPane(PCliente);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 300);
-        frame.setPreferredSize(new Dimension(900, 500));
+        frame.setPreferredSize(new Dimension(500, 300));
         frame.setLocationRelativeTo(null);
+        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/perfil-cliente.png").getImage());
         frame.pack();
         frame.setVisible(true);
 
@@ -27,29 +30,16 @@ public class cliente {
         agendarCitaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                JFrame frame = new JFrame("Registrar Mascota");
-                frame.setContentPane(new registrarMascota().PAgendar);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(500, 300);
-                frame.setPreferredSize(new Dimension(900, 500));
-                frame.setLocationRelativeTo(null);
-                frame.pack();
-                frame.setVisible(true);
+                new registrarMascota();
+                frame.dispose();
             }
         });
 
         eliminarRegistroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Eliminar Registro");
-                frame.setContentPane(new eliminarRegistro().PEliminarR);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(500, 300);
-                frame.setPreferredSize(new Dimension(900, 500));
-                frame.setLocationRelativeTo(null);
-                frame.pack();
-                frame.setVisible(true);
+                new eliminarRegistro();
+                frame.dispose();
             }
         });
 
@@ -57,15 +47,8 @@ public class cliente {
         historialMédicoDeMiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                JFrame frame = new JFrame("Historial Medico de la Mascota");
-                frame.setContentPane(new historialMedico().PHistorial);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(500, 300);
-                frame.setPreferredSize(new Dimension(900, 500));
-                frame.setLocationRelativeTo(null);
-                frame.pack();
-                frame.setVisible(true);
+                new historialMedico();
+                frame.dispose();
             }
         });
 
@@ -73,7 +56,8 @@ public class cliente {
         salirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                frame.dispose();
+                new login();
             }
         });
     }

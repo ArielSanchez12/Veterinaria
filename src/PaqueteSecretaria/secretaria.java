@@ -1,5 +1,7 @@
 package PaqueteSecretaria;
 
+import PaqueteRecursos.login;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +11,7 @@ public class secretaria {
     public JPanel PSecretaria;
     private JButton crearReportesButton;
     private JButton verReportesButton;
-    private JButton salirButton;
+    private JButton cerrarSesiónButton;
 
     public secretaria() {
 
@@ -19,6 +21,7 @@ public class secretaria {
         menuFrame.setSize(500, 300);
         menuFrame.setPreferredSize(new Dimension(500, 300));
         menuFrame.setLocationRelativeTo(null);
+        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/secretaria.png").getImage());
         menuFrame.pack();
         menuFrame.setVisible(true);
 
@@ -26,6 +29,13 @@ public class secretaria {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+            }
+        });
+        cerrarSesiónButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
+                new login();
             }
         });
     }

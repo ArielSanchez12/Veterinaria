@@ -10,7 +10,6 @@ public class administrador {
     public JPanel PAdministrador;
     private JButton gestionDeUsuariosButton;
     private JButton estadisticasButton;
-    private JButton establecerConfiguracionesButton;
     private JButton regresarButton;
 
     public administrador() {
@@ -21,18 +20,14 @@ public class administrador {
         menuFrame.setSize(500, 300);
         menuFrame.setPreferredSize(new Dimension(500, 300));
         menuFrame.setLocationRelativeTo(null);
+        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/perfil-administrador.png").getImage());
         menuFrame.pack();
         menuFrame.setVisible(true);
 
         gestionDeUsuariosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        gestionDeUsuariosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
                 new gestionUsuarios();
             }
         });
@@ -40,6 +35,7 @@ public class administrador {
         estadisticasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
                 new estadisticas();
             }
         });
@@ -47,6 +43,7 @@ public class administrador {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
                 new login();
             }
         });

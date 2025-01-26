@@ -181,6 +181,12 @@ public class citas extends JFrame {
             }
         });
 
-        regresarButton.addActionListener(e -> dispose());
+        regresarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new veterinario();
+            }
+        });
     }
 }

@@ -1,7 +1,9 @@
 package PaqueteCliente;
 
+import PaqueteAdministrador.administrador;
 import PaqueteRecursos.conexion;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -15,6 +17,16 @@ public class eliminarRegistro extends conexion {
     public JButton regresarButton;
 
     public eliminarRegistro() {
+
+        JFrame frame = new JFrame("Eliminar Registro");
+        frame.setContentPane(PEliminarR);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1000, 600);
+        frame.setPreferredSize(new Dimension(1000, 600));
+        frame.setLocationRelativeTo(null);
+        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/eliminar-registro.png").getImage());
+        frame.pack();
+        frame.setVisible(true);
 
         // Configurar botón para eliminar registro
         eliminarRegistroButton.addActionListener(new ActionListener() {
@@ -41,6 +53,7 @@ public class eliminarRegistro extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                frame.dispose();
                 new cliente();
             }
         });

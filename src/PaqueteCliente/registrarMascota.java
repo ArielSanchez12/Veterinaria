@@ -34,6 +34,17 @@ public class registrarMascota extends conexion {
     public File fotoMascota; // Archivo seleccionado
 
     public registrarMascota() {
+
+        JFrame frame = new JFrame("Registrar Mascota");
+        frame.setContentPane(PAgendar);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1000, 600);
+        frame.setPreferredSize(new Dimension(1000, 600));
+        frame.setLocationRelativeTo(null);
+        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/registrar-mascota.png").getImage());
+        frame.pack();
+        frame.setVisible(true);
+
         subirFotoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -151,6 +162,7 @@ public class registrarMascota extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                frame.dispose();
                 new cliente();
             }
         });

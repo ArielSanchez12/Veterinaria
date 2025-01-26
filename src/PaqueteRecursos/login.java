@@ -21,6 +21,7 @@ public class login extends conexion {
     private JComboBox comboBox1;
     private JButton ingresarButton;
     private JButton regresarButton;
+    private JCheckBox mostrarContraseniaCheckBox;
 
     public login() {
 
@@ -30,6 +31,7 @@ public class login extends conexion {
         menuFrame.setSize(500, 300);
         menuFrame.setPreferredSize(new Dimension(500, 300));
         menuFrame.setLocationRelativeTo(null);
+        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/login.png").getImage());
         menuFrame.pack();
         menuFrame.setVisible(true);
         comboBox1.addItem("administrador");
@@ -65,15 +67,27 @@ public class login extends conexion {
                             JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso! Bienvenido " + usuario);
 
                             switch (rol) {
-                                case "administrador" -> new administrador();
-                                case "cliente" -> new cliente();
-                                case "veterinario" -> new veterinario();
-                                case "secretaria" -> new secretaria();
+                                case "administrador" -> {
+                                    menuFrame.dispose();
+                                    new administrador();
+                                }
+                                case "cliente" -> {
+                                    menuFrame.dispose();
+                                    new cliente();
+                                }
+                                case "veterinario" -> {
+                                    menuFrame.dispose();
+                                    new veterinario();
+                                }
+                                case "secretaria" -> {
+                                    menuFrame.dispose();
+                                    new secretaria();
+                                }
                                 default -> JOptionPane.showMessageDialog(null, "No existe ese usuario en el rol actual, prueba con otro rol");
                             }
 
                         } else {
-                            JOptionPane.showMessageDialog(null, "Rol no existente");
+                            JOptionPane.showMessageDialog(null, "Asegurese de que el usuario pertenece al rol seleccionado");
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
@@ -88,7 +102,20 @@ public class login extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
                 new inicio();
+            }
+        });
+        mostrarContraseniaCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (mostrarContraseniaCheckBox.isSelected()) {
+                    // Mostrar la contraseña como texto normal
+                    passwordField1.setEchoChar((char) 0);
+                } else {
+                    // Ocultar la contraseña con los puntos predeterminados
+                    passwordField1.setEchoChar('•');
+                }
             }
         });
     }

@@ -1,6 +1,7 @@
 package PaqueteRecursos;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -13,8 +14,20 @@ public class registro extends conexion {
     private JPasswordField passwordField1;
     private JButton registrarmeButton;
     private JButton regresarAlInicioButton;
+    private JCheckBox mostrarContraseniaCheckBox;
 
     public registro() {
+
+        JFrame menuFrame = new JFrame("Crear Cuenta");
+        menuFrame.setContentPane(PRegistro);
+        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        menuFrame.setSize(500, 300);
+        menuFrame.setPreferredSize(new Dimension(500, 300));
+        menuFrame.setLocationRelativeTo(null);
+        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/cliente-nuevo.png").getImage());
+        menuFrame.pack();
+        menuFrame.setVisible(true);
+
         registrarmeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -40,6 +53,24 @@ public class registro extends conexion {
                     passwordField1.setText("");
                 } catch (SQLException exception) {
                     throw new RuntimeException(exception);
+                }
+            }
+        });
+
+        regresarAlInicioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
+                new inicio();
+            }
+        });
+        mostrarContraseniaCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (mostrarContraseniaCheckBox.isSelected()) {
+                    passwordField1.setEchoChar((char) 0);
+                } else {
+                    passwordField1.setEchoChar('•');
                 }
             }
         });

@@ -1,5 +1,7 @@
 package PaqueteVeterinario;
 
+import PaqueteRecursos.login;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,12 +22,14 @@ public class veterinario {
         menuFrame.setSize(600, 600);
         menuFrame.setPreferredSize(new Dimension(500, 500));
         menuFrame.setLocationRelativeTo(null);
+        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/veterinario.png").getImage());
         menuFrame.pack();
         menuFrame.setVisible(true);
 
         gestiónDeCitasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
                 citas ventanaCitas = new citas();
                 ventanaCitas.setVisible(true);
             }
@@ -48,7 +52,8 @@ public class veterinario {
         salirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                menuFrame.dispose();
+                new login();
             }
         });
 

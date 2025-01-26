@@ -1,6 +1,7 @@
 package PaqueteCliente;
 
 import PaqueteRecursos.conexion;
+import PaqueteRecursos.login;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import javax.swing.*;
@@ -20,10 +21,27 @@ public class historialMedico extends conexion {
     public JButton imprimirPDFButton;
 
     public historialMedico() {
+
+        JFrame frame = new JFrame("Historial Medico de la Mascota");
+        frame.setContentPane(PHistorial);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1000, 600);
+        frame.setPreferredSize(new Dimension(1000, 600));
+        frame.setLocationRelativeTo(null);
+        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/historial-medico.png").getImage());
+        frame.pack();
+        frame.setVisible(true);
+
         // Configurar el botón para cargar el historial médico
         verHistorialMedicoButton.addActionListener(e -> cargarHistorialMedico());
 
-        regresarButton.addActionListener(e -> new cliente());
+        regresarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new cliente();
+            }
+        });
 
         // Acción para el botón de imprimir PDF
         imprimirPDFButton.addActionListener(new ActionListener() {

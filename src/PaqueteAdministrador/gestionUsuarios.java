@@ -1,6 +1,5 @@
 package PaqueteAdministrador;
 import PaqueteRecursos.conexion;
-import PaqueteRecursos.login;
 
 
 import javax.swing.*;
@@ -41,6 +40,8 @@ public class gestionUsuarios extends conexion {
     public JScrollPane JScrollPaneVer;
     private JCheckBox clienteCheckBox2;
     private JTextField textField3;
+    private JCheckBox mostrarContraseniaCheckBox1;
+    private JCheckBox mostrarContraseniaCheckBox;
 
     public gestionUsuarios() {
 
@@ -50,6 +51,7 @@ public class gestionUsuarios extends conexion {
         menuFrame.setSize(500, 300);
         menuFrame.setPreferredSize(new Dimension(500, 300));
         menuFrame.setLocationRelativeTo(null);
+        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/gestion.png").getImage());
         menuFrame.pack();
         menuFrame.setVisible(true);
 
@@ -263,6 +265,7 @@ public class gestionUsuarios extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
                 new administrador();
             }
         });
@@ -270,6 +273,7 @@ public class gestionUsuarios extends conexion {
         regresarButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
                 new administrador();
             }
         });
@@ -277,6 +281,7 @@ public class gestionUsuarios extends conexion {
         regresarButton4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
                 new administrador();
             }
         });
@@ -284,7 +289,28 @@ public class gestionUsuarios extends conexion {
         regresarButton3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
                 new administrador();
+            }
+        });
+        mostrarContraseniaCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (mostrarContraseniaCheckBox.isSelected()) {
+                    passwordField1.setEchoChar((char) 0);
+                } else {
+                    passwordField1.setEchoChar('•');
+                }
+            }
+        });
+        mostrarContraseniaCheckBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (mostrarContraseniaCheckBox1.isSelected()) {
+                    passwordField2.setEchoChar((char) 0);
+                } else {
+                    passwordField2.setEchoChar('•');
+                }
             }
         });
     }
