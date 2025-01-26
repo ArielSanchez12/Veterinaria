@@ -11,6 +11,7 @@ public class veterinario {
     public JButton diagnosticosYTratamientosButton;
     public JButton historialMédicoDeMascotasButton;
     public JButton salirButton;
+    private JButton eliminarCitaYTrataButton;
 
     public veterinario() {
         JFrame menuFrame = new JFrame("Pantalla de Usuario");
@@ -48,6 +49,13 @@ public class veterinario {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
+            }
+        });
+
+        eliminarCitaYTrataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }

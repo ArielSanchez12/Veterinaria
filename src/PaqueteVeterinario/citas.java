@@ -1,11 +1,15 @@
 package PaqueteVeterinario;
 
+import PaqueteRecursos.conexion;
 import com.toedter.calendar.JCalendar;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,12 +24,10 @@ public class citas extends JFrame {
     private JTextField nombreMascotaTextField;
     private JCheckBox sexoMachoCheckBox;
     private JCheckBox sexoHembraCheckBox;
-    private JCheckBox chequeoGeneralCheckBox;
-    private JCheckBox cirugiaCheckBox;
-    private JCheckBox aseoCheckBox;
-    private JCheckBox vacunaCheckBox;
+    private JComboBox<String> comboBoxServicio;
     private JTextArea motivoCitaTextArea;
     private JTextField costoTextField;
+    private JTextField salaTextField;
     private JButton agendarButton;
     private JButton regresarButton;
     private Set<String> citasAgendadas;
@@ -33,7 +35,7 @@ public class citas extends JFrame {
     public citas() {
         citasAgendadas = new HashSet<>();
         setTitle("Gestor de Citas Veterinarias");
-        setSize(700, 800);
+        setSize(600, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -42,11 +44,9 @@ public class citas extends JFrame {
     }
 
     private void inicializarComponentes() {
-        // Panel principal
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        // Campos de entrada
         codigoCitaTextField = new JTextField(20);
         cedulaTextField = new JTextField(20);
         calendario = new JCalendar();
@@ -60,16 +60,20 @@ public class citas extends JFrame {
         nombreMascotaTextField = new JTextField(20);
         sexoMachoCheckBox = new JCheckBox("Macho");
         sexoHembraCheckBox = new JCheckBox("Hembra");
-        chequeoGeneralCheckBox = new JCheckBox("Chequeo General");
-        cirugiaCheckBox = new JCheckBox("Cirugía");
-        aseoCheckBox = new JCheckBox("Aseo");
-        vacunaCheckBox = new JCheckBox("Vacuna");
+
+        // Grupo de botones para los checkboxes de sexo
+        ButtonGroup grupoSexo = new ButtonGroup();
+        grupoSexo.add(sexoMachoCheckBox);
+        grupoSexo.add(sexoHembraCheckBox);
+
+        String[] servicios = {"Chequeo General", "Cirugía", "Aseo", "Vacunación"};
+        comboBoxServicio = new JComboBox<>(servicios);
         motivoCitaTextArea = new JTextArea(5, 20);
         costoTextField = new JTextField(20);
+        salaTextField = new JTextField(20);
         agendarButton = new JButton("Agendar Cita");
         regresarButton = new JButton("Regresar");
 
-        // Agregar componentes al panel
         panel.add(new JLabel("Código de la Cita:"));
         panel.add(codigoCitaTextField);
 
@@ -95,18 +99,16 @@ public class citas extends JFrame {
         panel.add(sexoPanel);
 
         panel.add(new JLabel("Tipo de Servicio:"));
-        JPanel servicioPanel = new JPanel();
-        servicioPanel.add(chequeoGeneralCheckBox);
-        servicioPanel.add(cirugiaCheckBox);
-        servicioPanel.add(aseoCheckBox);
-        servicioPanel.add(vacunaCheckBox);
-        panel.add(servicioPanel);
+        panel.add(comboBoxServicio);
 
         panel.add(new JLabel("Motivo de la Cita:"));
         panel.add(new JScrollPane(motivoCitaTextArea));
 
         panel.add(new JLabel("Costo de la Cita:"));
         panel.add(costoTextField);
+
+        panel.add(new JLabel("Sala:"));
+        panel.add(salaTextField);
 
         panel.add(agendarButton);
         panel.add(regresarButton);
@@ -115,7 +117,6 @@ public class citas extends JFrame {
     }
 
     private void agregarEventos() {
-        // Evento para el botón Agendar
         agendarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -125,23 +126,27 @@ public class citas extends JFrame {
                 String horaSeleccionada = (String) comboBoxHora.getSelectedItem();
                 String tipoMascota = tipoMascotaTextField.getText().trim();
                 String nombreMascota = nombreMascotaTextField.getText().trim();
-                String sexoMascota = sexoMachoCheckBox.isSelected() ? "Macho" : sexoHembraCheckBox.isSelected() ? "Hembra" : "";
+                String sexoMascota = sexoMachoCheckBox.isSelected() ? "macho" : sexoHembraCheckBox.isSelected() ? "hembra" : "";
+                String tipoServicio = (String) comboBoxServicio.getSelectedItem();
                 String motivoCita = motivoCitaTextArea.getText().trim();
                 String costo = costoTextField.getText().trim();
-
-                StringBuilder serviciosSeleccionados = new StringBuilder();
-                if (chequeoGeneralCheckBox.isSelected()) serviciosSeleccionados.append("Chequeo General, ");
-                if (cirugiaCheckBox.isSelected()) serviciosSeleccionados.append("Cirugía, ");
-                if (aseoCheckBox.isSelected()) serviciosSeleccionados.append("Aseo, ");
-                if (vacunaCheckBox.isSelected()) serviciosSeleccionados.append("Vacuna, ");
-
-                if (!serviciosSeleccionados.isEmpty()) {
-                    serviciosSeleccionados.setLength(serviciosSeleccionados.length() - 2); // Eliminar la ", " final
-                }
+                String sala = salaTextField.getText().trim();
 
                 if (codigoCita.isEmpty() || cedula.isEmpty() || tipoMascota.isEmpty() || nombreMascota.isEmpty() ||
-                        sexoMascota.isEmpty() || motivoCita.isEmpty() || costo.isEmpty() || horaSeleccionada == null) {
+                        sexoMascota.isEmpty() || motivoCita.isEmpty() || costo.isEmpty() || horaSeleccionada == null || sala.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+                    return;
+                }
+
+                // Validar que el costo no sea negativo
+                try {
+                    double costoDouble = Double.parseDouble(costo);
+                    if (costoDouble < 0) {
+                        JOptionPane.showMessageDialog(null, "El costo no puede ser un valor negativo.");
+                        return;
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Por favor, ingrese un costo válido.");
                     return;
                 }
 
@@ -150,53 +155,32 @@ public class citas extends JFrame {
                 if (citasAgendadas.contains(cita)) {
                     JOptionPane.showMessageDialog(null, "La cita para esa fecha y hora ya está agendada.");
                 } else {
-                    citasAgendadas.add(cita);
-                    JOptionPane.showMessageDialog(null, "Cita agendada exitosamente:\n"
-                            + "Código: " + codigoCita + "\n"
-                            + "Fecha: " + fechaSeleccionada + "\n"
-                            + "Hora: " + horaSeleccionada + "\n"
-                            + "Tipo de Mascota: " + tipoMascota + "\n"
-                            + "Nombre de Mascota: " + nombreMascota + "\n"
-                            + "Sexo: " + sexoMascota + "\n"
-                            + "Servicios: " + serviciosSeleccionados + "\n"
-                            + "Motivo: " + motivoCita + "\n"
-                            + "Costo: " + costo);
+                    try (Connection conn = new conexion().connect()) {
+                        String sql = "INSERT INTO citas_veterinarias (codigo_cita, cedula, fecha, hora, tipo_mascota, " +
+                                "nombre_mascota, sexo_mascota, tipo_servicio, motivo_cita, costo, sala) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        PreparedStatement ps = conn.prepareStatement(sql);
+                        ps.setInt(1, Integer.parseInt(codigoCita));
+                        ps.setString(2, cedula);
+                        ps.setString(3, fechaSeleccionada);
+                        ps.setString(4, horaSeleccionada);
+                        ps.setString(5, tipoMascota);
+                        ps.setString(6, nombreMascota);
+                        ps.setString(7, sexoMascota);
+                        ps.setString(8, tipoServicio);
+                        ps.setString(9, motivoCita);
+                        ps.setDouble(10, Double.parseDouble(costo));
+                        ps.setString(11, sala);
+
+                        ps.executeUpdate();
+                        citasAgendadas.add(cita);
+                        JOptionPane.showMessageDialog(null, "Cita agendada exitosamente.");
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Error al guardar en la base de datos: " + ex.getMessage());
+                    }
                 }
             }
         });
 
-        // Evento para el botón Regresar
-        regresarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
-
-        // Asegurar selección única en los checkboxes de sexo
-        ActionListener sexoListener = e -> {
-            if (e.getSource() == sexoMachoCheckBox && sexoMachoCheckBox.isSelected()) {
-                sexoHembraCheckBox.setSelected(false);
-            } else if (e.getSource() == sexoHembraCheckBox && sexoHembraCheckBox.isSelected()) {
-                sexoMachoCheckBox.setSelected(false);
-            }
-        };
-        sexoMachoCheckBox.addActionListener(sexoListener);
-        sexoHembraCheckBox.addActionListener(sexoListener);
-
-        // Asegurar selección única en los checkboxes de servicios
-        ActionListener servicioListener = e -> {
-            JCheckBox source = (JCheckBox) e.getSource();
-            if (source.isSelected()) {
-                chequeoGeneralCheckBox.setSelected(source == chequeoGeneralCheckBox);
-                cirugiaCheckBox.setSelected(source == cirugiaCheckBox);
-                aseoCheckBox.setSelected(source == aseoCheckBox);
-                vacunaCheckBox.setSelected(source == vacunaCheckBox);
-            }
-        };
-        chequeoGeneralCheckBox.addActionListener(servicioListener);
-        cirugiaCheckBox.addActionListener(servicioListener);
-        aseoCheckBox.addActionListener(servicioListener);
-        vacunaCheckBox.addActionListener(servicioListener);
+        regresarButton.addActionListener(e -> dispose());
     }
 }
