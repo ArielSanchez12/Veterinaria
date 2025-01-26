@@ -100,73 +100,90 @@ public class historialMedico extends conexion {
     }
 
     private void imprimirPDF() {
-        try (Connection conn = connect()) {
-            // Crear un documento PDF
-            Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream("HistorialMedico.pdf"));
-            document.open();
+        // Crear un JFileChooser para seleccionar la ubicación donde guardar el archivo
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar PDF");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-            // Agregar título al PDF
-            document.add(new Paragraph("Historial Médico de Mascotas", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK)));
-            document.add(new Paragraph(" ")); // Espacio
+        // Establecer un nombre de archivo predeterminado
+        fileChooser.setSelectedFile(new java.io.File("HistorialMedico.pdf"));
 
-            // Leer los datos desde la base de datos
-            String sql = "SELECT cedula, tipo_mascota, nombre_mascota, sexo_mascota, tipo_servicio, motivo_cita, foto_mascota FROM agendar_citas";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();
+        // Mostrar el cuadro de diálogo
+        int userSelection = fileChooser.showSaveDialog(null);
 
-            // Crear tabla en el PDF con las mismas columnas que en la base de datos
-            PdfPTable pdfTable = new PdfPTable(7); // Número de columnas
-            pdfTable.setWidthPercentage(100);
-            pdfTable.setSpacingBefore(10f);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            java.io.File fileToSave = fileChooser.getSelectedFile();
 
-            // Agregar encabezados de columna
-            pdfTable.addCell(new PdfPCell(new Phrase("Cédula", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
-            pdfTable.addCell(new PdfPCell(new Phrase("Tipo Mascota", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
-            pdfTable.addCell(new PdfPCell(new Phrase("Nombre Mascota", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
-            pdfTable.addCell(new PdfPCell(new Phrase("Sexo", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
-            pdfTable.addCell(new PdfPCell(new Phrase("Tipo Servicio", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
-            pdfTable.addCell(new PdfPCell(new Phrase("Motivo Cita", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
-            pdfTable.addCell(new PdfPCell(new Phrase("Foto", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+            try (Connection conn = connect()) {
+                // Crear un documento PDF
+                Document document = new Document();
+                PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
+                document.open();
 
-            // Agregar filas con los datos obtenidos
-            while (rs.next()) {
-                pdfTable.addCell(rs.getString("cedula"));
-                pdfTable.addCell(rs.getString("tipo_mascota"));
-                pdfTable.addCell(rs.getString("nombre_mascota"));
-                pdfTable.addCell(rs.getString("sexo_mascota"));
-                pdfTable.addCell(rs.getString("tipo_servicio"));
-                pdfTable.addCell(rs.getString("motivo_cita"));
+                // Agregar título al PDF
+                document.add(new Paragraph("Historial Médico de Mascotas", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK)));
+                document.add(new Paragraph(" ")); // Espacio
 
-                // Manejar la imagen (si existe)
-                byte[] fotoBytes = rs.getBytes("foto_mascota");
-                if (fotoBytes != null && fotoBytes.length > 0) {
-                    try {
-                        // Convertir los bytes en una imagen compatible con iText
-                        com.itextpdf.text.Image img = com.itextpdf.text.Image.getInstance(fotoBytes);
-                        img.scaleToFit(50, 50); // Ajustar tamaño
-                        PdfPCell imgCell = new PdfPCell(img);
-                        imgCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                        pdfTable.addCell(imgCell);
-                    } catch (Exception e) {
-                        // Manejar imágenes no válidas
-                        pdfTable.addCell("Imagen no válida");
+                // Leer los datos desde la base de datos
+                String sql = "SELECT cedula, tipo_mascota, nombre_mascota, sexo_mascota, tipo_servicio, motivo_cita, foto_mascota FROM agendar_citas";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                ResultSet rs = pstmt.executeQuery();
+
+                // Crear tabla en el PDF con las mismas columnas que en la base de datos
+                PdfPTable pdfTable = new PdfPTable(7); // Número de columnas
+                pdfTable.setWidthPercentage(100);
+                pdfTable.setSpacingBefore(10f);
+
+                // Agregar encabezados de columna
+                pdfTable.addCell(new PdfPCell(new Phrase("Cédula", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+                pdfTable.addCell(new PdfPCell(new Phrase("Tipo Mascota", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+                pdfTable.addCell(new PdfPCell(new Phrase("Nombre Mascota", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+                pdfTable.addCell(new PdfPCell(new Phrase("Sexo", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+                pdfTable.addCell(new PdfPCell(new Phrase("Tipo Servicio", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+                pdfTable.addCell(new PdfPCell(new Phrase("Motivo Cita", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+                pdfTable.addCell(new PdfPCell(new Phrase("Foto", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12))));
+
+                // Agregar filas con los datos obtenidos
+                while (rs.next()) {
+                    pdfTable.addCell(rs.getString("cedula"));
+                    pdfTable.addCell(rs.getString("tipo_mascota"));
+                    pdfTable.addCell(rs.getString("nombre_mascota"));
+                    pdfTable.addCell(rs.getString("sexo_mascota"));
+                    pdfTable.addCell(rs.getString("tipo_servicio"));
+                    pdfTable.addCell(rs.getString("motivo_cita"));
+
+                    // Manejar la imagen (si existe)
+                    byte[] fotoBytes = rs.getBytes("foto_mascota");
+                    if (fotoBytes != null && fotoBytes.length > 0) {
+                        try {
+                            // Convertir los bytes en una imagen compatible con iText
+                            com.itextpdf.text.Image img = com.itextpdf.text.Image.getInstance(fotoBytes);
+                            img.scaleToFit(50, 50); // Ajustar tamaño
+                            PdfPCell imgCell = new PdfPCell(img);
+                            imgCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                            pdfTable.addCell(imgCell);
+                        } catch (Exception e) {
+                            // Manejar imágenes no válidas
+                            pdfTable.addCell("Imagen no válida");
+                        }
+                    } else {
+                        pdfTable.addCell("Sin Imagen");
                     }
-                } else {
-                    pdfTable.addCell("Sin Imagen");
                 }
+
+                // Agregar la tabla al documento
+                document.add(pdfTable);
+
+                // Cerrar el documento
+                document.close();
+                JOptionPane.showMessageDialog(null, "PDF generado exitosamente en: " + fileToSave.getAbsolutePath());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al generar el PDF.");
             }
-
-            // Agregar la tabla al documento
-            document.add(pdfTable);
-
-            // Cerrar el documento
-            document.close();
-            JOptionPane.showMessageDialog(null, "PDF generado exitosamente: HistorialMedico.pdf");
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al generar el PDF.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Operación cancelada.");
         }
     }
 }
