@@ -169,7 +169,6 @@ public class citas extends JFrame {
                         ps.setString(8, tipoServicio);
                         ps.setString(9, motivoCita);
                         ps.setDouble(10, Double.parseDouble(costo));
-                        ps.setString(11, sala);
 
                         ps.executeUpdate();
                         citasAgendadas.add(cita);
