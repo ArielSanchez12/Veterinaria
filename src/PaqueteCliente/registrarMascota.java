@@ -45,6 +45,16 @@ public class registrarMascota extends conexion {
         frame.pack();
         frame.setVisible(true);
 
+        ButtonGroup grupoSexoMascota = new ButtonGroup();
+        grupoSexoMascota.add(hembraCheckBox);
+        grupoSexoMascota.add(machoCheckBox);
+
+        ButtonGroup grupoTipoServicio = new ButtonGroup();
+        grupoTipoServicio.add(aseoCheckBox);
+        grupoTipoServicio.add(cirugiaCheckBox);
+        grupoTipoServicio.add(chequeoGeneralCheckBox);
+        grupoTipoServicio.add(vacunacionCheckBox);
+
         subirFotoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -140,12 +150,8 @@ public class registrarMascota extends conexion {
                     textField3.setText("");
                     textField4.setText("");
                     textArea1.setText("");
-                    hembraCheckBox.setSelected(false);
-                    machoCheckBox.setSelected(false);
-                    chequeoGeneralCheckBox.setSelected(false);
-                    cirugiaCheckBox.setSelected(false);
-                    aseoCheckBox.setSelected(false);
-                    vacunacionCheckBox.setSelected(false);
+                    grupoSexoMascota.clearSelection();
+                    grupoTipoServicio.clearSelection();
                     fotoLabel.setIcon(null);
                     fotoMascota = null;
 
