@@ -12,7 +12,7 @@ public class cliente {
     public JButton agendarCitaButton;
     public JButton historialMédicoDeMiButton;
     public JButton salirButton;
-    private JButton eliminarRegistroButton;
+    public JButton eliminarRegistroButton;
 
     public cliente() {
 

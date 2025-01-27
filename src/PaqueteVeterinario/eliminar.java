@@ -2,78 +2,61 @@ package PaqueteVeterinario;
 
 import PaqueteRecursos.conexion;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class eliminar extends conexion {
-    public JPanel PEliminar;
-    public JTextField textFieldMascotaID;
+    public JPanel PEliminarVet;
     public JButton eliminarButton;
     public JButton regresarButton;
-    private JTextField textField1;
+    public JTextField textField1;
 
     public eliminar() {
-        JFrame frame = new JFrame("Eliminar Historial");
-        frame.setContentPane(PEliminar);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 600);
-        frame.setPreferredSize(new Dimension(1000, 600));
-        frame.setLocationRelativeTo(null);
-        frame.pack();
-        frame.setVisible(true);
-
-        // Configurar botón para eliminar
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String mascotaID = textFieldMascotaID.getText().trim();
+                String searchValue = textField1.getText().trim();  // Obtener el texto del campo de texto
 
-                if (mascotaID.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Por favor, ingrese un ID válido.");
+                if (searchValue.isEmpty()) {
+                    JOptionPane.showMessageDialog(PEliminarVet, "Por favor, ingrese un valor para buscar.");
                     return;
                 }
 
-                // Confirmar acción
-                int confirm = JOptionPane.showConfirmDialog(null,
-                        "¿Está seguro de que desea eliminar el historial de la mascota con ID: " + mascotaID + "?",
-                        "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                // Eliminar por código de cita o cédula
+                try (Connection conn = connect()) {
+                    // Usar OR en la consulta para buscar por código_cita o cédula
+                    String sql = "DELETE FROM citas_veterinarias WHERE cedula = ? OR codigo_cita = ?";
 
-                if (confirm == JOptionPane.YES_OPTION) {
-                    eliminarHistorial(mascotaID);
+                    PreparedStatement pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, searchValue);  // Establecer el valor en la primera columna (cedula)
+                    pstmt.setString(2, searchValue);  // Establecer el valor en la segunda columna (codigo_cita)
+
+                    // Mostrar la consulta antes de ejecutarla para depuración
+                    System.out.println("Ejecutando consulta: " + pstmt.toString());
+
+                    int rowsAffected = pstmt.executeUpdate(); // Ejecutar la consulta
+
+                    if (rowsAffected > 0) {
+                        JOptionPane.showMessageDialog(PEliminarVet, "Registro eliminado exitosamente.");
+                    } else {
+                        JOptionPane.showMessageDialog(PEliminarVet, "No se encontró ningún registro con el valor ingresado.");
+                    }
+
+                } catch (Exception ex) {
+                    // Mostrar detalles del error
+                    JOptionPane.showMessageDialog(PEliminarVet, "Error al eliminar el registro: " + ex.getMessage());
+                    ex.printStackTrace(); // Imprimir el error en la consola para depuración
                 }
             }
         });
 
-        // Configurar botón para regresar
-        regresarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new historial(); // Volver al historial
+        regresarButton.addActionListener(e -> {
+            JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(PEliminarVet);
+            if (parentFrame != null) {
+                parentFrame.dispose(); // Cierra la ventana actual
             }
         });
-    }
-
-    private void eliminarHistorial(String mascotaID) {
-        try (Connection conn = connect()) {
-            String sql = "DELETE FROM HistorialMascotas WHERE mascota_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, mascotaID);
-
-            int filasAfectadas = pstmt.executeUpdate();
-            if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Historial eliminado con éxito.");
-                textFieldMascotaID.setText(""); // Limpiar campo
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró un historial con el ID proporcionado.");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al eliminar el historial.");
-        }
     }
 }

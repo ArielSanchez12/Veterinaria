@@ -1,7 +1,6 @@
 package PaqueteVeterinario;
 
 import PaqueteRecursos.login;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,10 +9,10 @@ import java.awt.event.ActionListener;
 public class veterinario {
     public JPanel PVeterinario;
     public JButton gestiónDeCitasButton;
-    public JButton diagnosticosYTratamientosButton;
     public JButton historialMédicoDeMascotasButton;
+    public JButton eliminarCitaYTrataButton;
     public JButton salirButton;
-    private JButton eliminarCitaYTrataButton;
+
 
     public veterinario() {
         JFrame menuFrame = new JFrame("Pantalla de Usuario");
@@ -35,17 +34,39 @@ public class veterinario {
             }
         });
 
-        diagnosticosYTratamientosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para Diagnósticos y Tratamientos
-            }
-        });
 
         historialMédicoDeMascotasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para Historial Médico
+
+                JFrame historialFrame = new JFrame("Historial Del Veterinario");
+                historial historialPanel = new historial(); // Instancia del panel `historial`
+                historialFrame.setContentPane(historialPanel.PHistorial);
+                historialFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                historialFrame.setSize(900, 600);
+                historialFrame.setPreferredSize(new Dimension(900, 600));
+                historialFrame.setLocationRelativeTo(null);
+                historialFrame.pack();
+                historialFrame.setVisible(true);
+
+
+            }
+        });
+
+        eliminarCitaYTrataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                JFrame eliminarFrame = new JFrame("Eliminar para el Veterinario");
+                eliminar eliminarPanel = new eliminar();
+                eliminarFrame.setContentPane(eliminarPanel.PEliminarVet);
+                eliminarFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                eliminarFrame.setSize(900, 600);
+                eliminarFrame.setPreferredSize(new Dimension(900, 600));
+                eliminarFrame.setLocationRelativeTo(null);
+                eliminarFrame.pack();
+                eliminarFrame.setVisible(true);
+
             }
         });
 
@@ -54,13 +75,6 @@ public class veterinario {
             public void actionPerformed(ActionEvent e) {
                 menuFrame.dispose();
                 new login();
-            }
-        });
-
-        eliminarCitaYTrataButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
             }
         });
     }

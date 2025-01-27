@@ -27,7 +27,6 @@ public class citas extends JFrame {
     private JComboBox<String> comboBoxServicio;
     private JTextArea motivoCitaTextArea;
     private JTextField costoTextField;
-    private JTextField salaTextField;
     private JButton agendarButton;
     private JButton regresarButton;
     private Set<String> citasAgendadas;
@@ -38,7 +37,6 @@ public class citas extends JFrame {
         setSize(600, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-
         inicializarComponentes();
         agregarEventos();
     }
@@ -70,7 +68,6 @@ public class citas extends JFrame {
         comboBoxServicio = new JComboBox<>(servicios);
         motivoCitaTextArea = new JTextArea(5, 20);
         costoTextField = new JTextField(20);
-        salaTextField = new JTextField(20);
         agendarButton = new JButton("Agendar Cita");
         regresarButton = new JButton("Regresar");
 
@@ -107,9 +104,6 @@ public class citas extends JFrame {
         panel.add(new JLabel("Costo de la Cita:"));
         panel.add(costoTextField);
 
-        panel.add(new JLabel("Sala:"));
-        panel.add(salaTextField);
-
         panel.add(agendarButton);
         panel.add(regresarButton);
 
@@ -130,10 +124,9 @@ public class citas extends JFrame {
                 String tipoServicio = (String) comboBoxServicio.getSelectedItem();
                 String motivoCita = motivoCitaTextArea.getText().trim();
                 String costo = costoTextField.getText().trim();
-                String sala = salaTextField.getText().trim();
 
                 if (codigoCita.isEmpty() || cedula.isEmpty() || tipoMascota.isEmpty() || nombreMascota.isEmpty() ||
-                        sexoMascota.isEmpty() || motivoCita.isEmpty() || costo.isEmpty() || horaSeleccionada == null || sala.isEmpty()) {
+                        sexoMascota.isEmpty() || motivoCita.isEmpty() || costo.isEmpty() || horaSeleccionada == null) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                     return;
                 }
@@ -157,7 +150,7 @@ public class citas extends JFrame {
                 } else {
                     try (Connection conn = new conexion().connect()) {
                         String sql = "INSERT INTO citas_veterinarias (codigo_cita, cedula, fecha, hora, tipo_mascota, " +
-                                "nombre_mascota, sexo_mascota, tipo_servicio, motivo_cita, costo, sala) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                "nombre_mascota, sexo_mascota, tipo_servicio, motivo_cita, costo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                         PreparedStatement ps = conn.prepareStatement(sql);
                         ps.setInt(1, Integer.parseInt(codigoCita));
                         ps.setString(2, cedula);
