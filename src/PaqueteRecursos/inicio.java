@@ -61,7 +61,7 @@ public class inicio {
                 // Ajustar el pie de página
                 int pieWidth = 290; // Ancho fijo del pie
                 int pieHeight = 10; // Altura fija del pie
-                int pieX = (panelWidth - pieWidth) / 2; // Centrar horizontalmente
+                int pieX = (panelWidth - pieWidth + 37) / 2; // Centrar horizontalmente
                 int pieY = panelHeight - pieHeight - 10; // A 10 píxeles del borde inferior
                 pie.setBounds(pieX, pieY, pieWidth, pieHeight);
             }
