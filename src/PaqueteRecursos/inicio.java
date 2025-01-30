@@ -47,7 +47,7 @@ public class inicio {
                 // Calcular posiciones dinámicamente
                 int buttonWidth = 300;
                 int buttonHeight = 40;
-                int buttonX = (panelWidth - buttonWidth) / 2;
+                int buttonX = (panelWidth - buttonWidth + 37) / 2;
 
                 // Margen entre botones
                 int buttonSpacing = 30;
@@ -82,19 +82,19 @@ public class inicio {
         registroParaClientesNuevosButton = new JButton("Registro para Clientes Nuevos");
         registroParaClientesNuevosButton.setFont(new Font("Arial", Font.PLAIN, 18));
         registroParaClientesNuevosButton.setBackground(new Color(173, 216, 230));
-        registroParaClientesNuevosButton.setBounds(550, 400, 300, 40); // Posicionamos manualmente
+        //registroParaClientesNuevosButton.setBounds(550, 400, 300, 40); // Posicionamos manualmente
         PInicio.add(registroParaClientesNuevosButton);
 
         inicioDeSesiónButton = new JButton("Inicio de Sesión");
         inicioDeSesiónButton.setFont(new Font("Arial", Font.PLAIN, 18));
         inicioDeSesiónButton.setBackground(new Color(173, 216, 230));
-        inicioDeSesiónButton.setBounds(550, 475, 300, 40); // Posicionamos manualmente
+        //inicioDeSesiónButton.setBounds(550, 475, 300, 40); // Posicionamos manualmente
         PInicio.add(inicioDeSesiónButton);
 
         salirButton = new JButton("Salir");
         salirButton.setFont(new Font("Arial", Font.PLAIN, 18));
         salirButton.setBackground(new Color(255, 182, 193));
-        salirButton.setBounds(550, 550, 300, 40); // Posicionamos manualmente
+        //salirButton.setBounds(550, 550, 300, 40); // Posicionamos manualmente
         PInicio.add(salirButton);
 
         // Pie de página
@@ -102,7 +102,7 @@ public class inicio {
         pie.setText("© 2025 PetCarePro - Todos los derechos reservados");
         pie.setFont(new Font("Arial", Font.ITALIC, 12));
         pie.setForeground(Color.DARK_GRAY);
-        pie.setBounds(500, 680, 400, 30); // Posicionamos manualmente
+        //pie.setBounds(500, 680, 400, 30); // Posicionamos manualmente
         PInicio.add(pie);
 
 
