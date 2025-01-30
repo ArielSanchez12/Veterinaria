@@ -26,6 +26,8 @@ public class reportes extends conexion{
     private JPanel PReporteDyT;
     private JTextField textField1;
     private JButton imprimirReportePDFButton;
+    private JButton crearReporteDeDiagnosticoButton;
+    private JButton imprimirReportePDFButton1;
     private JLabel LConclusion;
 
     public reportes() {
