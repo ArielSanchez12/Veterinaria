@@ -12,6 +12,7 @@ public class veterinario {
     public JButton historialMédicoDeMascotasButton;
     public JButton eliminarCitaYTrataButton;
     public JButton salirButton;
+    public JButton diagnosticosYTratamientosButton;
 
 
     public veterinario() {
@@ -75,6 +76,23 @@ public class veterinario {
             public void actionPerformed(ActionEvent e) {
                 menuFrame.dispose();
                 new login();
+            }
+        });
+
+        diagnosticosYTratamientosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                JFrame DiagFrame = new JFrame("Diagnosticos y Tratamientos");
+                DiagnosticoyTratamiento diagPanel = new DiagnosticoyTratamiento();
+                DiagFrame.setContentPane(diagPanel.PDiag);
+                DiagFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                DiagFrame.setSize(900, 600);
+                DiagFrame.setPreferredSize(new Dimension(900, 600));
+                DiagFrame.setLocationRelativeTo(null);
+                DiagFrame.pack();
+                DiagFrame.setVisible(true);
+
             }
         });
     }

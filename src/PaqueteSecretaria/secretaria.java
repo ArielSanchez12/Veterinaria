@@ -28,6 +28,7 @@ public class secretaria {
         crearReportesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                new reportes();
 
             }
         });
