@@ -37,6 +37,7 @@ public class estadisticas extends conexion {
         menuFrame.setPreferredSize(new Dimension(1000, 600));
         menuFrame.setLocationRelativeTo(null);
         menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/estadisticas.png").getImage());
+        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         menuFrame.pack();
         menuFrame.setVisible(true);
 
