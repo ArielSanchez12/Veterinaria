@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class login extends conexion {
-    public JPanel PLogin;
+    //public JPanel PLogin;
     private JTextField textField1;
     private JPasswordField passwordField1;
     private JComboBox comboBox1;
@@ -24,21 +24,65 @@ public class login extends conexion {
     private JCheckBox mostrarContraseniaCheckBox;
 
     public login() {
-
         JFrame menuFrame = new JFrame("Login");
-        menuFrame.setContentPane(PLogin);
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setSize(500, 300);
-        menuFrame.setPreferredSize(new Dimension(500, 300));
+        //menuFrame.setSize(500, 300);
         menuFrame.setLocationRelativeTo(null);
         menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/login.png").getImage());
-        menuFrame.pack();
-        menuFrame.setVisible(true);
-        comboBox1.addItem("administrador");
-        comboBox1.addItem("cliente");
-        comboBox1.addItem("veterinario");
-        comboBox1.addItem("secretaria");
+        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
 
+        // Panel principal con fondo
+        JPanel PLogin = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/log-reg.jpeg"); // Imagen de fondo
+                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        PLogin.setLayout(new GridBagLayout()); // Diseño responsivo
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(15, -15, 35, 15); // Aumentar espacio entre componentes
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Componentes
+        JLabel lblUsuario = new JLabel("Usuario:");
+        lblUsuario.setFont(new Font("Arial", Font.BOLD, 18));
+        textField1 = new JTextField(20);
+        textField1.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        JLabel lblContrasenia = new JLabel("Contraseña:");
+        lblContrasenia.setFont(new Font("Arial", Font.BOLD, 18));
+        passwordField1 = new JPasswordField(20);
+        passwordField1.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        mostrarContraseniaCheckBox = new JCheckBox("Mostrar contraseña");
+        mostrarContraseniaCheckBox.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        comboBox1 = new JComboBox<>(new String[]{"administrador", "cliente", "veterinario", "secretaria"});
+        comboBox1.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        ingresarButton = new JButton("Iniciar Sesion");
+        ingresarButton.setFont(new Font("Arial", Font.BOLD, 18));
+        ingresarButton.setPreferredSize(new Dimension(200, 50));
+
+        regresarButton = new JButton("Regresar al Inicio");
+        regresarButton.setFont(new Font("Arial", Font.BOLD, 18));
+        regresarButton.setPreferredSize(new Dimension(200, 50));
+
+        // Agregar componentes al panel
+        gbc.gridx = 0; gbc.gridy = 0; PLogin.add(lblUsuario, gbc);
+        gbc.gridx = 1; PLogin.add(textField1, gbc);
+        gbc.gridx = 0; gbc.gridy = 1; PLogin.add(lblContrasenia, gbc);
+        gbc.gridx = 1; PLogin.add(passwordField1, gbc);
+        gbc.gridx = 1; gbc.gridy = 2; PLogin.add(mostrarContraseniaCheckBox, gbc);
+        gbc.gridx = 1; gbc.gridy = 3; PLogin.add(comboBox1, gbc);
+        gbc.gridx = 1; gbc.gridy = 4; PLogin.add(ingresarButton, gbc);
+        gbc.gridx = 1; gbc.gridy = 5; PLogin.add(regresarButton, gbc);
+
+        menuFrame.setContentPane(PLogin);
+        menuFrame.setVisible(true);
 
         ingresarButton.addActionListener(new ActionListener() {
             @Override
@@ -85,7 +129,6 @@ public class login extends conexion {
                                 }
                                 default -> JOptionPane.showMessageDialog(null, "No existe ese usuario en el rol actual, prueba con otro rol");
                             }
-
                         } else {
                             JOptionPane.showMessageDialog(null, "Asegurese de que el usuario pertenece al rol seleccionado");
                         }
@@ -106,14 +149,13 @@ public class login extends conexion {
                 new inicio();
             }
         });
+
         mostrarContraseniaCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (mostrarContraseniaCheckBox.isSelected()) {
-                    // Mostrar la contraseña como texto normal
                     passwordField1.setEchoChar((char) 0);
                 } else {
-                    // Ocultar la contraseña con los puntos predeterminados
                     passwordField1.setEchoChar('•');
                 }
             }

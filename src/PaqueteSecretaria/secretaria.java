@@ -28,7 +28,8 @@ public class secretaria {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new reportes();
-
+                menuFrame.dispose();
+                new reportes();
             }
         });
         cerrarSesiónButton.addActionListener(new ActionListener() {

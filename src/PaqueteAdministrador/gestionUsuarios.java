@@ -1,7 +1,6 @@
 package PaqueteAdministrador;
 import PaqueteRecursos.conexion;
 
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -42,49 +41,107 @@ public class gestionUsuarios extends conexion {
     private JTextField textField3;
     private JCheckBox mostrarContraseniaCheckBox1;
     private JCheckBox mostrarContraseniaCheckBox;
+    private JComboBox comboBox1;
+    private JLabel backgroundLabel;
 
     public gestionUsuarios() {
-
         JFrame menuFrame = new JFrame("Gestion de Usuarios");
-        menuFrame.setContentPane(PGestion);
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setSize(500, 300);
-        menuFrame.setPreferredSize(new Dimension(500, 300));
-        menuFrame.setLocationRelativeTo(null);
         menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/gestion.png").getImage());
-        menuFrame.pack();
+        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Pantalla completa
+
+        // Cargar imagen de fondo
+        ImageIcon background = new ImageIcon("src/PaqueteRecursos/fondos/admin.png");
+        backgroundLabel = new JLabel(background);
+        backgroundLabel.setLayout(new BorderLayout());
+
+        tabbedPane1 = new JTabbedPane();
+
+        PGestion = new JPanel(null) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/admin.jpeg"); // Imagen de fondo
+                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+
+        agregarComponentes();
+        tabbedPane1.addTab("Agregar", PGestion);
+        backgroundLabel.add(tabbedPane1, BorderLayout.CENTER);
+
+        menuFrame.setContentPane(backgroundLabel);
         menuFrame.setVisible(true);
+    }
 
-        ButtonGroup grupoRolesCrear = new ButtonGroup();
-        grupoRolesCrear.add(administradorCheckBox);
-        grupoRolesCrear.add(secretariaCheckBox);
-        grupoRolesCrear.add(veterinarioCheckBox);
+    private void agregarComponentes() {
+        PGestion.setLayout(new GridBagLayout());
 
-        ButtonGroup grupoRolesActualizar = new ButtonGroup();
-        grupoRolesActualizar.add(administradorCheckBox1);
-        grupoRolesActualizar.add(secretariaCheckBox1);
-        grupoRolesActualizar.add(veterinarioCheckBox1);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(15, -15, 35, 15); // Aumentar espacio entre componentes
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        ButtonGroup grupoRolesVer = new ButtonGroup();
-        grupoRolesVer.add(administradorCheckBox2);
-        grupoRolesVer.add(secretariaCheckBox2);
-        grupoRolesVer.add(veterinarioCheckBox2);
-        grupoRolesVer.add(clienteCheckBox2);
+        // Componentes
+        JLabel titulo = new JLabel("Agregar Usuarios", SwingConstants.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 24));
+        titulo.setForeground(new Color(0, 0, 0));
 
+        JLabel usuarioLabel = new JLabel("Usuario:");
+        usuarioLabel.setFont(new Font("Arial", Font.BOLD, 18));
+
+        textField1 = new JTextField(20);
+        textField1.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        JLabel contrasenaLabel = new JLabel("Contraseña:");
+        contrasenaLabel.setFont(new Font("Arial", Font.BOLD, 18));
+
+        passwordField1 = new JPasswordField(20);
+        passwordField1.setFont(new Font("Arial", Font.PLAIN, 16));
+
+
+        mostrarContraseniaCheckBox = new JCheckBox("Mostrar contraseña");
+        mostrarContraseniaCheckBox.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        comboBox1 = new JComboBox<>(new String[]{"administrador", "veterinario", "secretaria"});
+        comboBox1.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        agregarButton = new JButton("Agregar");
+        agregarButton.setFont(new Font("Arial", Font.BOLD, 18));
+        agregarButton.setPreferredSize(new Dimension(200, 50));
+
+        regresarButton = new JButton("Regresar");
+        regresarButton.setFont(new Font("Arial", Font.BOLD, 18));
+        regresarButton.setPreferredSize(new Dimension(200, 50));
+        //PGestion.add(regresarButton);
+
+        // Agregar componentes al panel
+        gbc.gridx = 1; gbc.gridy = 0; PGestion.add(titulo, gbc);
+        gbc.gridx = 0; gbc.gridy = 1; PGestion.add(usuarioLabel, gbc);
+        gbc.gridx = 1; PGestion.add(textField1, gbc);
+        gbc.gridx = 0; gbc.gridy = 2; PGestion.add(contrasenaLabel, gbc);
+        gbc.gridx = 1; PGestion.add(passwordField1, gbc);
+        gbc.gridx = 1; gbc.gridy = 3; PGestion.add(mostrarContraseniaCheckBox, gbc);
+        gbc.gridx = 1; gbc.gridy = 4; PGestion.add(comboBox1, gbc);
+        gbc.gridx = 1; gbc.gridy = 5; PGestion.add(agregarButton, gbc);
+        gbc.gridx = 1; gbc.gridy = 6; PGestion.add(regresarButton, gbc);
+        agregarEventos();
+    }
+
+    private void agregarEventos() {
         agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nombreUser = textField1.getText();
                 String contra = passwordField1.getText();
-                String rol = "";
+                String rol = (String) comboBox1.getSelectedItem();
 
-                if (administradorCheckBox.isSelected()) {
+                if ("Administrador".equals(rol)) {
                     rol = "administrador";
                     nombreUser = "@Ad_" + nombreUser;
-                } else if (secretariaCheckBox.isSelected()) {
+                } else if ("Secretaria".equals(rol)) {
                     rol = "secretaria";
                     nombreUser = "@Sec_" + nombreUser;
-                } else if (veterinarioCheckBox.isSelected()) {
+                } else if ("Veterinario".equals(rol)) {
                     rol = "veterinario";
                     nombreUser = "@Vet_" + nombreUser;
                 }
@@ -104,7 +161,6 @@ public class gestionUsuarios extends conexion {
                     JOptionPane.showMessageDialog(null, "Registro de usuario exitoso");
                     textField1.setText("");
                     passwordField1.setText("");
-                    grupoRolesCrear.clearSelection();
 
                 } catch (SQLException exception) {
                     throw new RuntimeException(exception);
@@ -112,187 +168,6 @@ public class gestionUsuarios extends conexion {
             }
         });
 
-        actualizarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nombreUser = textField2.getText().trim();
-                String nuevaContra = passwordField2.getText().trim();
-                String nuevoRol = "";
-
-                if (administradorCheckBox1.isSelected()) {
-                    nuevoRol = "administrador";
-                    nombreUser = nombreUser.replaceFirst("^@\\w+_", "@Ad_");
-                } else if (secretariaCheckBox1.isSelected()) {
-                    nuevoRol = "secretaria";
-                    nombreUser = nombreUser.replaceFirst("^@\\w+_", "@Sec_");
-                } else if (veterinarioCheckBox1.isSelected()) {
-                    nuevoRol = "veterinario";
-                    nombreUser = nombreUser.replaceFirst("^@\\w+_", "@Vet_");
-                }
-
-                // Verificación de campos obligatorios
-                if (nombreUser.isEmpty() || nuevaContra.isEmpty() || nuevoRol.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos correctamente.");
-                    return;
-                }
-
-                try (Connection conn = connect()) {
-                    String sql = "UPDATE usuarios SET usuario = ?, contrasenia = ?, rol = ? WHERE usuario = ?";
-                    PreparedStatement pstmt = conn.prepareStatement(sql);
-                    pstmt.setString(1, nombreUser);
-                    pstmt.setString(2, nuevaContra);
-                    pstmt.setString(3, nuevoRol);
-                    pstmt.setString(4, textField2.getText().trim()); // Nombre de usuario original antes de editar
-
-                    int filasAfectadas = pstmt.executeUpdate();
-                    if (filasAfectadas > 0) {
-                        JOptionPane.showMessageDialog(null, "Usuario actualizado correctamente.");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No se encontró el usuario a actualizar.");
-                    }
-
-                    // Limpiar los campos después de la actualización
-                    textField2.setText("");
-                    passwordField2.setText("");
-                    grupoRolesActualizar.clearSelection();
-
-                } catch (SQLException exception) {
-                    JOptionPane.showMessageDialog(null, "Error al actualizar usuario: " + exception.getMessage());
-                }
-            }
-        });
-        verUsuariosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String rolVer = "";
-                if (administradorCheckBox2.isSelected()) {
-                    rolVer = "administrador";
-                } else if (secretariaCheckBox2.isSelected()) {
-                    rolVer = "secretaria";
-                } else if (veterinarioCheckBox2.isSelected()) {
-                    rolVer = "veterinario";
-                } else if (clienteCheckBox2.isSelected()) {
-                    rolVer = "cliente";
-                }
-
-                if (rolVer.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Por favor, selecciona un rol");
-                    return;
-                }
-
-                try (Connection conn = connect()) {
-                    String sql = "SELECT usuario, contrasenia FROM usuarios WHERE rol = ?";
-                    PreparedStatement pstmt = conn.prepareStatement(sql);
-                    pstmt.setString(1, rolVer);
-                    ResultSet rs = pstmt.executeQuery();
-                    grupoRolesVer.clearSelection();
-
-
-                    String[] columnas = {"Usuario", "Contraseña"};
-                    DefaultTableModel modeloTablaVer = new DefaultTableModel(null, columnas) {
-                        @Override
-                        public boolean isCellEditable(int row, int column) {
-                            return false;
-                        }
-                    };
-
-                    while (rs.next()) {
-                        String nombreUserVer = rs.getString("usuario");
-                        String contraseniaUserVer = rs.getString("contrasenia");
-
-
-                        modeloTablaVer.addRow(new Object[]{nombreUserVer, contraseniaUserVer});
-                    }
-
-                    JTable tablaVer = new JTable(modeloTablaVer);
-
-                    tablaVer.setRowHeight(30);
-                    tablaVer.setFillsViewportHeight(true);
-
-
-                    JScrollPane scrollTablaVer = new JScrollPane(tablaVer);
-                    JScrollPaneVer.setViewportView(scrollTablaVer);
-
-                } catch (SQLException x) {
-                    x.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Error al cargar los usuarios");
-                }
-            }
-        });
-
-        eliminarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String usuarioEliminar = textField3.getText();
-                String rolEliminar = textField4.getText();
-
-                if (usuarioEliminar.isEmpty() || rolEliminar.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Por favor, ingrese un usuario y un rol");
-                    return;
-                }
-
-                int confirmacion = JOptionPane.showConfirmDialog(null,
-                        "¿Estás seguro de que deseas eliminar el usuario \"" + usuarioEliminar +
-                                "\" para siempre?\n(Para siempre es muuucho tiempo)",
-                        "Confirmar eliminación",
-                        JOptionPane.YES_NO_OPTION);
-
-                if (confirmacion == JOptionPane.YES_OPTION) {
-                    try (Connection conn = connect()) {
-                        String sql = "DELETE FROM usuarios WHERE usuario = ? AND rol = ?";
-                        PreparedStatement pstmt = conn.prepareStatement(sql);
-                        pstmt.setString(1, usuarioEliminar);
-                        pstmt.setString(2, rolEliminar);
-
-                        int filasAfectadas = pstmt.executeUpdate();
-
-                        if (filasAfectadas > 0) {
-                            JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente");
-                            textField3.setText("");
-                            textField4.setText("");
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Usuario o rol incorrecto");
-                        }
-
-                    } catch (SQLException x) {
-                        x.printStackTrace();
-                        JOptionPane.showMessageDialog(null, "Error al eliminar el usuario");
-                    }
-                }
-            }
-        });
-        regresarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
-                new administrador();
-            }
-        });
-
-        regresarButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
-                new administrador();
-            }
-        });
-
-        regresarButton4.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
-                new administrador();
-            }
-        });
-
-        regresarButton3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
-                new administrador();
-            }
-        });
         mostrarContraseniaCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -303,14 +178,12 @@ public class gestionUsuarios extends conexion {
                 }
             }
         });
-        mostrarContraseniaCheckBox1.addActionListener(new ActionListener() {
+
+        regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (mostrarContraseniaCheckBox1.isSelected()) {
-                    passwordField2.setEchoChar((char) 0);
-                } else {
-                    passwordField2.setEchoChar('•');
-                }
+                ((JFrame) SwingUtilities.getWindowAncestor(PGestion)).dispose();
+                new administrador();
             }
         });
     }
