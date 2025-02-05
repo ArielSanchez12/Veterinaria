@@ -40,7 +40,8 @@ public class registrarMascota extends conexion {
         JFrame frame = new JFrame("Registrar Mascota");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Pantalla completa
-        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/registrar-mascota.png").getImage());
+        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/regmascota.png").getImage());
+        frame.setMinimumSize(new Dimension(800, 600));
 
         // Crear un panel personalizado que muestra la imagen de fondo
         BackgroundPanel backgroundPanel = new BackgroundPanel("src/PaqueteRecursos/fondos/cliente.jpeg");
@@ -183,7 +184,7 @@ public class registrarMascota extends conexion {
         });
     }
 
-    static class BackgroundPanel extends JPanel {
+    public static class BackgroundPanel extends JPanel {
         private Image backgroundImage;
 
         public BackgroundPanel(String imagePath) {

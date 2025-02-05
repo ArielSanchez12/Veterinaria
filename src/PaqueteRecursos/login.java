@@ -26,10 +26,9 @@ public class login extends conexion {
     public login() {
         JFrame menuFrame = new JFrame("Login");
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //menuFrame.setSize(500, 300);
-        menuFrame.setLocationRelativeTo(null);
         menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/login.png").getImage());
         menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
+        menuFrame.setMinimumSize(new Dimension(800, 600));
 
         // Panel principal con fondo
         JPanel PLogin = new JPanel() {

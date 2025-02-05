@@ -17,9 +17,9 @@ public class cliente {
 
         JFrame frame = new JFrame("Menu Cliente");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/perfil-cliente.png").getImage());
+        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/cliente.png").getImage());
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setMinimumSize(new Dimension(800, 600));
 
         // Panel principal con fondo
         JPanel PCliente = new JPanel() {

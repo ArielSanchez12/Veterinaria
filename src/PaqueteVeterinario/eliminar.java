@@ -1,7 +1,10 @@
 package PaqueteVeterinario;
 
 import PaqueteRecursos.conexion;
+import PaqueteRecursos.login;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -14,6 +17,57 @@ public class eliminar extends conexion {
     public JTextField textField1;
 
     public eliminar() {
+
+        JFrame menuFrame = new JFrame("Eliminar registro del Veterinario");
+        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/elim.png").getImage());
+        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
+        menuFrame.setMinimumSize(new Dimension(800, 600));
+
+        // Panel principal con fondo
+        JPanel PEliminarVet = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/vet.jpeg"); // Imagen de fondo
+                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        PEliminarVet.setLayout(new GridBagLayout()); // Diseño responsivo
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(15, -15, 35, 15); // Aumentar espacio entre componentes
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Componentes
+        JLabel titulo = new JLabel("Eliminar el Registro para el Veterinario", SwingConstants.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 24));
+        titulo.setForeground(new Color(0, 0, 0));
+
+        JLabel LCedula = new JLabel("Codigo o cedula con el que se registro la mascota:");
+        LCedula.setFont(new Font("Arial", Font.BOLD, 18));
+
+        textField1 = new JTextField(20);
+        textField1.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        eliminarButton = new JButton("Eliminar");
+        eliminarButton.setFont(new Font("Arial", Font.BOLD, 18));
+        eliminarButton.setPreferredSize(new Dimension(200, 50));
+
+        regresarButton = new JButton("Regresar al Inicio");
+        regresarButton.setFont(new Font("Arial", Font.BOLD, 18));
+        regresarButton.setPreferredSize(new Dimension(200, 50));
+
+        // Agregar componentes al panel
+        gbc.gridx = 1; gbc.gridy = 0; PEliminarVet.add(titulo, gbc);
+        gbc.gridx = 0; gbc.gridy = 1; PEliminarVet.add(LCedula, gbc);
+        gbc.gridx = 1; gbc.gridy = 1; PEliminarVet.add(textField1, gbc);
+        gbc.gridx = 1; gbc.gridy = 2; PEliminarVet.add(eliminarButton, gbc);
+        gbc.gridx = 1; gbc.gridy = 3; PEliminarVet.add(regresarButton, gbc);
+
+        menuFrame.setContentPane(PEliminarVet);
+        menuFrame.setVisible(true);
+
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,10 +106,11 @@ public class eliminar extends conexion {
             }
         });
 
-        regresarButton.addActionListener(e -> {
-            JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(PEliminarVet);
-            if (parentFrame != null) {
-                parentFrame.dispose(); // Cierra la ventana actual
+        regresarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
+                new veterinario();
             }
         });
     }

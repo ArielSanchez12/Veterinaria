@@ -47,6 +47,7 @@ public class gestionUsuarios extends conexion {
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/gestion.png").getImage());
         menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Pantalla completa
+        menuFrame.setMinimumSize(new Dimension(800, 600));
 
         // Cargar imagen de fondo
         ImageIcon background = new ImageIcon("src/PaqueteRecursos/fondos/admin.png");

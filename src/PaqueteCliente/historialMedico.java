@@ -1,36 +1,79 @@
 package PaqueteCliente;
 
 import PaqueteRecursos.conexion;
-import PaqueteRecursos.login;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
 import java.sql.*;
 
 public class historialMedico extends conexion {
-    public JPanel PHistorial;
     public JButton verHistorialMedicoButton;
     public JButton regresarButton;
-    public JScrollPane HISTORIAL; // ScrollPane para contener la tabla
     public JButton imprimirPDFButton;
+    private JScrollPane Historial;
 
     public historialMedico() {
 
-        JFrame frame = new JFrame("Historial Medico de la Mascota");
-        frame.setContentPane(PHistorial);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 600);
-        frame.setPreferredSize(new Dimension(1000, 600));
-        frame.setLocationRelativeTo(null);
-        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/historial-medico.png").getImage());
-        frame.pack();
-        frame.setVisible(true);
+        JFrame menuFrame = new JFrame("Historial Medico");
+        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/historial.png").getImage());
+        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        menuFrame.setMinimumSize(new Dimension(800, 600));
+
+        // Panel principal con fondo
+        JPanel PHistorial = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/cliente.jpeg"); // Imagen de fondo
+                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        PHistorial.setLayout(new GridBagLayout());
+
+        GridBagConstraints verh = new GridBagConstraints();
+        verh.insets = new Insets(15, 9, 35, 5);
+        verh.fill = GridBagConstraints.HORIZONTAL;
+
+        // Componentes
+        JLabel titulo = new JLabel("Ver el Historial Medico de las Mascotas", SwingConstants.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 24));
+        titulo.setForeground(new Color(0, 0, 0));
+
+        Historial = new JScrollPane();
+        Historial.setPreferredSize(new Dimension(750, 200));
+
+        verHistorialMedicoButton = new JButton("Ver Historial Medico");
+        verHistorialMedicoButton.setFont(new Font("Arial", Font.BOLD, 18));
+        verHistorialMedicoButton.setPreferredSize(new Dimension(200, 50));
+
+        imprimirPDFButton = new JButton("Guardar Historial (PDF)");
+        imprimirPDFButton.setFont(new Font("Arial", Font.BOLD, 18));
+        imprimirPDFButton.setPreferredSize(new Dimension(200, 50));
+
+        regresarButton = new JButton("Regresar");
+        regresarButton.setFont(new Font("Arial", Font.BOLD, 18));
+        regresarButton.setPreferredSize(new Dimension(200, 50));
+
+
+        // Agregar componentes al panel
+        verh.gridx = 1; verh.gridy = 0; PHistorial.add(titulo, verh);
+        verh.gridx = 1; verh.gridy = 1; PHistorial.add(Historial, verh);
+        verh.gridx = 1; verh.gridy = 2; PHistorial.add(verHistorialMedicoButton, verh);
+        verh.gridx = 1; verh.gridy = 3; PHistorial.add(imprimirPDFButton, verh);
+        verh.gridx = 1; verh.gridy = 5; PHistorial.add(regresarButton, verh);
+
+        // Mostrar el panel en el frame y hacerlo visible
+        menuFrame.setContentPane(PHistorial);
+        menuFrame.setVisible(true);
+
 
         // Configurar el botón para cargar el historial médico
         verHistorialMedicoButton.addActionListener(e -> cargarHistorialMedico());
@@ -38,7 +81,7 @@ public class historialMedico extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                menuFrame.dispose();
                 new cliente();
             }
         });
@@ -106,10 +149,10 @@ public class historialMedico extends conexion {
                 }
             });
 
-            tabla.setRowHeight(120);
+            tabla.setRowHeight(30);
             tabla.setFillsViewportHeight(true);
 
-            HISTORIAL.setViewportView(tabla);
+            Historial.setViewportView(tabla);
 
         } catch (SQLException e) {
             e.printStackTrace();

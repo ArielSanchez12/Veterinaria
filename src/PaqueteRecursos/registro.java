@@ -19,10 +19,9 @@ public class registro extends conexion {
 
         JFrame menuFrame = new JFrame("Registro");
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //menuFrame.setSize(500, 300);
-        menuFrame.setLocationRelativeTo(null);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/cliente-nuevo.png").getImage());
+        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/nuevo.png").getImage());
         menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
+        menuFrame.setMinimumSize(new Dimension(800, 600));
 
         // Panel principal con fondo
         JPanel PRegistro = new JPanel() {

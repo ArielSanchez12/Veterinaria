@@ -1,16 +1,18 @@
 package PaqueteVeterinario;
 
+import PaqueteCliente.registrarMascota;
 import PaqueteRecursos.conexion;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class DiagnosticoyTratamiento extends conexion {
-    public JPanel PDiag;
-    public JTabbedPane tabbedPane1;
     public JButton regresarButton;
     public JButton guardarButton;
     public JTextField textField1;  // Código de la cita
@@ -18,8 +20,30 @@ public class DiagnosticoyTratamiento extends conexion {
     public JTextArea textArea2;    // Tratamiento
     public JButton buscarButton;
     public JLabel MostrarCita;
+    public JPanel PDiagTrat;
+    public JPanel PGrande;
 
     public DiagnosticoyTratamiento() {
+
+        JFrame frame = new JFrame("Aplicar el Diagnostico y el Tratamiento a la mascota");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Pantalla completa
+        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/veterinario.png").getImage());
+        frame.setMinimumSize(new Dimension(800, 600));
+        PDiagTrat.setPreferredSize(new Dimension(700, 450));
+
+        // Crear un panel personalizado que muestra la imagen de fondo
+        registrarMascota.BackgroundPanel backgroundPanel = new registrarMascota.BackgroundPanel("src/PaqueteRecursos/fondos/vet.jpeg");
+        backgroundPanel.setLayout(new BorderLayout());
+
+        // Hacer el panel PAgendar transparente para ver la imagen de fondo
+        PGrande.setOpaque(false);
+        backgroundPanel.add(PGrande, BorderLayout.CENTER);
+
+        frame.setContentPane(backgroundPanel);
+        frame.setVisible(true);
+
+
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,10 +61,8 @@ public class DiagnosticoyTratamiento extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(PDiag);
-                if (parentFrame != null) {
-                    parentFrame.dispose(); // Cierra la ventana actual
-                }
+                frame.dispose();
+                new veterinario();
             }
         });
     }
@@ -157,9 +179,8 @@ public class DiagnosticoyTratamiento extends conexion {
                     }
                 }
             }
-
-            // Limpiar los campos después de guardar
-            limpiarCampos();
+            textArea1.setText("");
+            textArea2.setText("");
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -167,9 +188,35 @@ public class DiagnosticoyTratamiento extends conexion {
         }
     }
 
-    // Método para limpiar los campos
-    private void limpiarCampos() {
-        textArea1.setText("");
-        textArea2.setText("");
+    static class BackgroundPanel extends JPanel {
+        private Image backgroundImage;
+
+        public BackgroundPanel(String imagePath) {
+            try {
+                backgroundImage = new ImageIcon(imagePath).getImage();
+            } catch (Exception e) {
+                System.out.println("No se pudo cargar la imagen de fondo.");
+            }
+
+            // Redibujar la imagen cuando la ventana cambie de tamaño
+            addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentResized(ComponentEvent e) {
+                    if (backgroundImage != null) {
+                        backgroundImage = new ImageIcon(imagePath).getImage().getScaledInstance(
+                                getWidth(), getHeight(), Image.SCALE_SMOOTH);
+                        repaint();
+                    }
+                }
+            });
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (backgroundImage != null) {
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            }
+        }
     }
 }

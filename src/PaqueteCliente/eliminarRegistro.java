@@ -11,22 +11,61 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class eliminarRegistro extends conexion {
-    public JPanel PEliminarR;
     public JTextField textField1;
     public JButton eliminarRegistroButton;
     public JButton regresarButton;
 
     public eliminarRegistro() {
 
-        JFrame frame = new JFrame("Eliminar Registro");
-        frame.setContentPane(PEliminarR);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 600);
-        frame.setPreferredSize(new Dimension(1000, 600));
-        frame.setLocationRelativeTo(null);
-        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/eliminar-registro.png").getImage());
-        frame.pack();
-        frame.setVisible(true);
+        JFrame menuFrame = new JFrame("Eliminar registro");
+        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/elim.png").getImage());
+        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
+        menuFrame.setMinimumSize(new Dimension(800, 600));
+
+        // Panel principal con fondo
+        JPanel PEliminarR = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/cliente.jpeg"); // Imagen de fondo
+                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        PEliminarR.setLayout(new GridBagLayout()); // Diseño responsivo
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(15, -15, 35, 15); // Aumentar espacio entre componentes
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Componentes
+        JLabel titulo = new JLabel("Eliminar el Registro de la Mascota", SwingConstants.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 24));
+        titulo.setForeground(new Color(0, 0, 0));
+
+        JLabel LCedula = new JLabel("Cedula con la que se registro a la mascota:");
+        LCedula.setFont(new Font("Arial", Font.BOLD, 18));
+
+        textField1 = new JTextField(20);
+        textField1.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        eliminarRegistroButton = new JButton("Eliminar el registro");
+        eliminarRegistroButton.setFont(new Font("Arial", Font.BOLD, 18));
+        eliminarRegistroButton.setPreferredSize(new Dimension(200, 50));
+
+        regresarButton = new JButton("Regresar al Inicio");
+        regresarButton.setFont(new Font("Arial", Font.BOLD, 18));
+        regresarButton.setPreferredSize(new Dimension(200, 50));
+
+        // Agregar componentes al panel
+        gbc.gridx = 1; gbc.gridy = 0; PEliminarR.add(titulo, gbc);
+        gbc.gridx = 0; gbc.gridy = 1; PEliminarR.add(LCedula, gbc);
+        gbc.gridx = 1; gbc.gridy = 1; PEliminarR.add(textField1, gbc);
+        gbc.gridx = 1; gbc.gridy = 2; PEliminarR.add(eliminarRegistroButton, gbc);
+        gbc.gridx = 1; gbc.gridy = 3; PEliminarR.add(regresarButton, gbc);
+
+        menuFrame.setContentPane(PEliminarR);
+        menuFrame.setVisible(true);
 
         // Configurar botón para eliminar registro
         eliminarRegistroButton.addActionListener(new ActionListener() {
@@ -53,7 +92,7 @@ public class eliminarRegistro extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                menuFrame.dispose();
                 new cliente();
             }
         });
