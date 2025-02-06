@@ -45,16 +45,14 @@ public class historial extends conexion {
         verh.fill = GridBagConstraints.HORIZONTAL;
 
         // Componentes
-        JLabel titulo = new JLabel("Ver el Historial Medico de las Mascotas", SwingConstants.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 24));
-        titulo.setForeground(new Color(255, 255, 255));
-        titulo.setOpaque(true);
-        titulo.setBackground(Color.BLACK);
+        JLabel titulo = new JLabel("Historial Médico de las Mascotas", SwingConstants.LEFT);
+        titulo.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 24));
+        titulo.setForeground(new Color(0, 0, 0));
 
         HistorialVet = new JScrollPane();
         HistorialVet.setPreferredSize(new Dimension(750, 200));
 
-        verHistorialButton = new JButton("Ver Historial Medico");
+        verHistorialButton = new JButton("Ver Historial Médico");
         verHistorialButton.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
         verHistorialButton.setPreferredSize(new Dimension(200, 50));
 
