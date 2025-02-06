@@ -13,7 +13,7 @@ Toda la documentación del proyecto está en el siguiente enlace:
 
 ## 🎥 Video en YouTube 🎥
 
-Mira el video explicativo del proyecto en el siguiente enlace:  
+Video explicativo del proyecto en el siguiente enlace:  
 🔗 [Ver en YouTube](https://youtu.be/HR-jB7QAqS0?si=FBz6q7FqMENhA1lB)  
 
 ---
