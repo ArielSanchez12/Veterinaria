@@ -18,4 +18,3 @@ Mira el video explicativo del proyecto en el siguiente enlace:
 
 ---
 
-### 🚀 ¡Gracias por visitar este repositorio! 🐶🐾  
