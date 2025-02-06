@@ -1,6 +1,6 @@
 # 🐾 Proyecto Final de POO - Veterinaria 🐾
 
-**INTEGRANTES:** Alisson Muñoz, Ivan Castillo, Richard Padilla, Ariel Sanchez 🌟
+👨‍👩‍👧‍👦 **INTEGRANTES:** Alisson Muñoz, Ivan Castillo, Richard Padilla, Ariel Sanchez 👨‍👩‍👧‍👦
 
 ---
 
