@@ -1,6 +1,6 @@
 # 🐾 Proyecto Final de POO - Veterinaria 🐾
 
-¡Repositorio del proyecto final de **Programación Orientada a Objetos**! 🌟
+¡**INTEGRANTES:** Alisson Muñoz, Ivan Castillo, Richard Padilla, Ariel Sanchez! 🌟
 
 ---
 
