@@ -68,7 +68,7 @@ public class registro extends conexion {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Creación de componentes de la interfaz
-        JLabel lblUsuario = new JLabel("Usuario");
+        JLabel lblUsuario = new JLabel("Usuario", SwingConstants.CENTER);
         lblUsuario.setFont(new Font("Arial", Font.BOLD, 18));
         lblUsuario.setForeground(Color.WHITE);
         lblUsuario.setOpaque(true);

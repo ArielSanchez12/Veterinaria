@@ -169,7 +169,7 @@ public class gestionUsuarios extends conexion {
         textField1 = new JTextField(20);
         textField1.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        JLabel contrasenaLabel = new JLabel("Contraseña");
+        JLabel contrasenaLabel = new JLabel("Contraseña", SwingConstants.CENTER);
         contrasenaLabel.setFont(new Font("Arial", Font.BOLD, 18));
         contrasenaLabel.setForeground(new Color(255, 255, 255));
         contrasenaLabel.setOpaque(true);
@@ -283,7 +283,7 @@ public class gestionUsuarios extends conexion {
         titulo2.setOpaque(true);
         titulo2.setBackground(Color.BLACK);
 
-        JLabel usuarioLabel2 = new JLabel("Usuario a Actualizar");
+        JLabel usuarioLabel2 = new JLabel("Usuario a Actualizar", SwingConstants.CENTER);
         usuarioLabel2.setFont(new Font("Arial", Font.BOLD, 18));
         usuarioLabel2.setForeground(new Color(255, 255, 255));
         usuarioLabel2.setOpaque(true);
@@ -292,7 +292,7 @@ public class gestionUsuarios extends conexion {
         textField2 = new JTextField(20);
         textField2.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        JLabel contrasenaLabel2 = new JLabel("Nueva Contraseña");
+        JLabel contrasenaLabel2 = new JLabel("Nueva Contraseña", SwingConstants.CENTER);
         contrasenaLabel2.setFont(new Font("Arial", Font.BOLD, 18));
         contrasenaLabel2.setForeground(new Color(255, 255, 255));
         contrasenaLabel2.setOpaque(true);
@@ -526,7 +526,7 @@ public class gestionUsuarios extends conexion {
         titulo4.setOpaque(true);
         titulo4.setBackground(Color.BLACK);
 
-        JLabel usuarioLabel3 = new JLabel("Usuario a Eliminar");
+        JLabel usuarioLabel3 = new JLabel("Usuario a Eliminar", SwingConstants.CENTER);
         usuarioLabel3.setFont(new Font("Arial", Font.BOLD, 18));
         usuarioLabel3.setForeground(new Color(255, 255, 255));
         usuarioLabel3.setOpaque(true);
