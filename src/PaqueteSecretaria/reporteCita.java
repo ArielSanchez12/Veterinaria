@@ -258,6 +258,7 @@ public class reporteCita extends conexion{
                         LSexoMascota.setText(rs.getString("sexo_mascota"));
                         LDiagnostico.setText(rs.getString("diagnostico") != null ? rs.getString("diagnostico") : "No registrado");
                         LTratamiento.setText(rs.getString("tratamiento") != null ? rs.getString("tratamiento") : "No registrado");
+                        textField1.setText("");
                     } else {
                         JOptionPane.showMessageDialog(null, "No se encontró ninguna cita con el código ingresado.");
                     }
