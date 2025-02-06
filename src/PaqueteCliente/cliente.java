@@ -1,6 +1,7 @@
 /**
  * Clase que representa el menú principal para los clientes en el sistema.
  * Permite a los clientes agendar citas, ver su historial médico, eliminar su registro y salir de la sesión.
+ * @author Richard Padilla
  */
 package PaqueteCliente;
 

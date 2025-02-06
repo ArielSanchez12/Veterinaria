@@ -1,11 +1,16 @@
 package PaqueteSecretaria;
 
 import PaqueteRecursos.login;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+/**
+ * Clase que representa el menú principal de la secretaria de la veterinaria.
+ * Permite a la secretaria generar y guardar en PDF los reportes de la empresa.
+ * @author Ivan Castillo
+ */
 
 public class secretaria {
     private JButton crearReportesButton;

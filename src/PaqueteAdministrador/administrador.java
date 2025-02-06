@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 /**
  * Clase que representa la interfaz gráfica del menú de administrador.
  * Permite al usuario acceder a la gestión de usuarios, estadísticas y cerrar sesión.
+ * @author Ariel Sánchez
  */
 public class administrador {
 

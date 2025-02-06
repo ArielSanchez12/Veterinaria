@@ -6,6 +6,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Clase que representa el menú principal del veterinario en el sistema.
+ * @author Alisson Muñoz
+ */
 public class veterinario {
     public JButton gestiónDeCitasButton;
     public JButton historialMédicoDeMascotasButton;
