@@ -1,6 +1,5 @@
 package PaqueteCliente;
 
-import PaqueteAdministrador.administrador;
 import PaqueteRecursos.conexion;
 import javax.swing.*;
 import java.awt.*;
@@ -10,46 +9,52 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * Clase para eliminar el registro de una mascota por número de cédula.
+ * Extiende la clase conexion para manejar la conexión a la base de datos.
+ */
 public class eliminarRegistro extends conexion {
-    public JTextField textField1;
-    public JButton eliminarRegistroButton;
-    public JButton regresarButton;
+    private JTextField textField1;
+    private JButton eliminarRegistroButton;
+    private JButton regresarButton;
 
+    /**
+     * Constructor que inicializa la interfaz gráfica para eliminar registros.
+     */
     public eliminarRegistro() {
-
-        JFrame menuFrame = new JFrame("Eliminar registro");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/elim.png").getImage());
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
-        menuFrame.setMinimumSize(new Dimension(800, 600));
+        JFrame frameEliminarRegistroCliente = new JFrame("Eliminar registro");
+        frameEliminarRegistroCliente.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameEliminarRegistroCliente.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/elim.png").getImage());
+        frameEliminarRegistroCliente.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frameEliminarRegistroCliente.setMinimumSize(new Dimension(800, 600));
 
         // Panel principal con fondo
         JPanel PEliminarR = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/cliente.jpeg"); // Imagen de fondo
+                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/cliente.jpeg");
                 g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        PEliminarR.setLayout(new GridBagLayout()); // Diseño responsivo
+        PEliminarR.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, -15, 35, 22); // Aumentar espacio entre componentes
+        gbc.insets = new Insets(15, -15, 35, 22);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Componentes
         JLabel titulo = new JLabel("Eliminar el Registro de la Mascota", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 20));
-        titulo.setForeground(new Color(255, 255, 255));
+        titulo.setForeground(Color.WHITE);
         titulo.setOpaque(true);
         titulo.setBackground(Color.BLACK);
 
-        JLabel LCedula = new JLabel("Buscar y eliminar por cedula");
+        JLabel LCedula = new JLabel("Buscar y eliminar por cédula");
         LCedula.setFont(new Font("Arial", Font.BOLD, 20));
-        titulo.setForeground(new Color(255, 255, 255));
-        titulo.setOpaque(true);
-        titulo.setBackground(Color.BLACK);
+        LCedula.setForeground(Color.WHITE);
+        LCedula.setOpaque(true);
+        LCedula.setBackground(Color.BLACK);
 
         textField1 = new JTextField(20);
         textField1.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -69,23 +74,23 @@ public class eliminarRegistro extends conexion {
         gbc.gridx = 1; gbc.gridy = 2; PEliminarR.add(eliminarRegistroButton, gbc);
         gbc.gridx = 1; gbc.gridy = 3; PEliminarR.add(regresarButton, gbc);
 
-        menuFrame.setContentPane(PEliminarR);
-        menuFrame.setVisible(true);
+        frameEliminarRegistroCliente.setContentPane(PEliminarR);
+        frameEliminarRegistroCliente.setVisible(true);
 
-        // Configurar botón para eliminar registro
+        // Acción del botón para eliminar registro
         eliminarRegistroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String cedulaRegistro = textField1.getText().trim();
 
                 if (cedulaRegistro.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Por favor, ingrese una cedula válido.");
+                    JOptionPane.showMessageDialog(null, "Por favor, ingrese una cédula válida.");
                     return;
                 }
 
-                // Confirmar acción
+                // Confirmación de eliminación
                 int confirm = JOptionPane.showConfirmDialog(null,
-                        "¿Está seguro de que desea eliminar el registro con la cedula: " + cedulaRegistro + "?",
+                        "¿Está seguro de que desea eliminar el registro con la cédula: " + cedulaRegistro + "?",
                         "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
                 if (confirm == JOptionPane.YES_OPTION) {
@@ -94,29 +99,32 @@ public class eliminarRegistro extends conexion {
             }
         });
 
+        // Acción del botón para regresar al menú del cliente
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameEliminarRegistroCliente.dispose();
                 new cliente();
             }
         });
     }
 
-    private void eliminarRegistro(String idRegistro) {
+    /**
+     * Método que elimina un registro de la base de datos según la cédula proporcionada.
+     * @param cedulaRegistro Número de cédula del registro a eliminar.
+     */
+    private void eliminarRegistro(String cedulaRegistro) {
         try (Connection conn = connect()) {
-
             String sql = "DELETE FROM agendar_citas WHERE cedula = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, idRegistro);
-
+            pstmt.setString(1, cedulaRegistro);
 
             int filasAfectadas = pstmt.executeUpdate();
             if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Registro eliminado con exito.");
+                JOptionPane.showMessageDialog(null, "Registro eliminado con éxito.");
                 textField1.setText("");
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontro un registro con la cedula proporcionado.");
+                JOptionPane.showMessageDialog(null, "No se encontró un registro con la cédula proporcionada.");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

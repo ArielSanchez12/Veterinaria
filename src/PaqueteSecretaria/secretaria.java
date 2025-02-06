@@ -14,11 +14,11 @@ public class secretaria {
 
     public secretaria() {
 
-        JFrame menuFrame = new JFrame("Menu Secretaria");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/secretaria.png").getImage());
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
-        menuFrame.setMinimumSize(new Dimension(800, 600));
+        JFrame frameSecretaria = new JFrame("Menu Secretaria");
+        frameSecretaria.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameSecretaria.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/secretaria.png").getImage());
+        frameSecretaria.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
+        frameSecretaria.setMinimumSize(new Dimension(800, 600));
 
         // Panel principal con fondo
         JPanel PSecretaria = new JPanel() {
@@ -43,7 +43,7 @@ public class secretaria {
 
         crearReportesButton = new JButton("Crear Reporte Financiero");
         crearReportesButton.setFont(new Font("Arial", Font.BOLD, 18));
-        crearReportesButton.setPreferredSize(new Dimension(250, 50));
+        crearReportesButton.setPreferredSize(new Dimension(275, 50));
 
         crearReporteDeCitasButton = new JButton("Crear Reporte de Citas");
         crearReporteDeCitasButton.setFont(new Font("Arial", Font.BOLD, 18));
@@ -59,27 +59,27 @@ public class secretaria {
         gbc.gridx = 1; gbc.gridy = 2; PSecretaria.add(crearReporteDeCitasButton, gbc);
         gbc.gridx = 1; gbc.gridy = 3; PSecretaria.add(cerrarSesiónButton, gbc);
 
-        menuFrame.setContentPane(PSecretaria);
-        menuFrame.setVisible(true);
+        frameSecretaria.setContentPane(PSecretaria);
+        frameSecretaria.setVisible(true);
 
         crearReportesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new reporteFinanciero();
-                menuFrame.dispose();
+                frameSecretaria.dispose();
             }
         });
         cerrarSesiónButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameSecretaria.dispose();
                 new login();
             }
         });
         crearReporteDeCitasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameSecretaria.dispose();
                 new reporteCita();
             }
         });

@@ -1,5 +1,6 @@
 package PaqueteCliente;
 
+import PaqueteRecursos.conexion;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,13 +14,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import PaqueteRecursos.conexion;
-
+/**
+ * La clase {@code registrarMascota} representa la interfaz gráfica para registrar la información de una mascota
+ * y agendar una cita. Permite ingresar datos como cédula del cliente, tipo de mascota, nombre, sexo,
+ * tipo de servicio requerido, motivo de la cita y observaciones. También permite subir una foto de la mascota.
+ * Esta clase hereda de la clase `conexion` que probablemente gestiona la conexión a la base de datos.
+ */
 public class registrarMascota extends conexion {
     public JPanel PAgendar;
-    public JTextField textField1; // Cedula
-    public JTextField textField2; // Tipo Mascota
-    public JTextField textField3; // Nombre Mascota
+    public JTextField textField1;
+    public JTextField textField2;
+    public JTextField textField3;
     public JButton subirFotoButton;
     public JCheckBox chequeoGeneralCheckBox;
     public JCheckBox vacunacionCheckBox;
@@ -27,8 +32,8 @@ public class registrarMascota extends conexion {
     public JCheckBox aseoCheckBox;
     public JCheckBox hembraCheckBox;
     public JCheckBox machoCheckBox;
-    public JTextField textField4; // Motivo Cita
-    public JTextArea textArea1; // Observaciones
+    public JTextField textField4;
+    public JTextArea textArea1;
     public JButton agendarCitaButton;
     public JButton regresarButton;
     public JLabel fotoLabel;
@@ -42,16 +47,20 @@ public class registrarMascota extends conexion {
     public JLabel LObserv;
     private JLabel LTitulo;
     private JLabel LFormato;
+    public File fotoMascota;
 
-    public File fotoMascota; // Archivo seleccionado
-
+    /**
+     * Constructor de la clase `registrarMascota`.
+     * Inicializa la interfaz gráfica, configura los componentes, establece los listeners para los botones
+     * y maneja la lógica de registro de la cita.
+     */
     public registrarMascota() {
 
-        JFrame frame = new JFrame("Registrar Mascota");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Pantalla completa
-        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/regmascota.png").getImage());
-        frame.setMinimumSize(new Dimension(800, 600));
+        JFrame frameRegistrarMascota = new JFrame("Registrar Mascota");
+        frameRegistrarMascota.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameRegistrarMascota.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frameRegistrarMascota.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/regmascota.png").getImage());
+        frameRegistrarMascota.setMinimumSize(new Dimension(800, 600));
 
         // Crear un panel personalizado que muestra la imagen de fondo
         BackgroundPanel backgroundPanel = new BackgroundPanel("src/PaqueteRecursos/fondos/cliente.jpeg");
@@ -60,7 +69,6 @@ public class registrarMascota extends conexion {
         // Hacer el panel PAgendar transparente para ver la imagen de fondo
         PAgendar.setOpaque(false);
         backgroundPanel.add(PAgendar, BorderLayout.CENTER);
-
 
         LTitulo.setFont(new Font("Arial", Font.BOLD, 24));
         LTitulo.setForeground(new Color(255, 255, 255));
@@ -103,10 +111,10 @@ public class registrarMascota extends conexion {
         LObserv.setForeground(new Color(0, 0, 0));
 
 
-        frame.setContentPane(backgroundPanel);
-        frame.setVisible(true);
+        frameRegistrarMascota.setContentPane(backgroundPanel);
+        frameRegistrarMascota.setVisible(true);
 
-        //Botones
+        //Grupo de botones para que se seleccione uno a la vez
         ButtonGroup grupoSexoMascota = new ButtonGroup();
         grupoSexoMascota.add(hembraCheckBox);
         grupoSexoMascota.add(machoCheckBox);
@@ -230,7 +238,7 @@ public class registrarMascota extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                frameRegistrarMascota.dispose();
                 new cliente();
             }
         });

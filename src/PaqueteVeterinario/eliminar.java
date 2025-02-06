@@ -18,11 +18,11 @@ public class eliminar extends conexion {
 
     public eliminar() {
 
-        JFrame menuFrame = new JFrame("Eliminar registro del Veterinario");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/elim.png").getImage());
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
-        menuFrame.setMinimumSize(new Dimension(800, 600));
+        JFrame frameEliminarRegistroVeterinario = new JFrame("Eliminar registro del Veterinario");
+        frameEliminarRegistroVeterinario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameEliminarRegistroVeterinario.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/elim.png").getImage());
+        frameEliminarRegistroVeterinario.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
+        frameEliminarRegistroVeterinario.setMinimumSize(new Dimension(800, 600));
 
         // Panel principal con fondo
         JPanel PEliminarVet = new JPanel() {
@@ -70,8 +70,8 @@ public class eliminar extends conexion {
         gbc.gridx = 1; gbc.gridy = 2; PEliminarVet.add(eliminarButton, gbc);
         gbc.gridx = 1; gbc.gridy = 3; PEliminarVet.add(regresarButton, gbc);
 
-        menuFrame.setContentPane(PEliminarVet);
-        menuFrame.setVisible(true);
+        frameEliminarRegistroVeterinario.setContentPane(PEliminarVet);
+        frameEliminarRegistroVeterinario.setVisible(true);
 
         eliminarButton.addActionListener(new ActionListener() {
             @Override
@@ -114,7 +114,7 @@ public class eliminar extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameEliminarRegistroVeterinario.dispose();
                 new veterinario();
             }
         });

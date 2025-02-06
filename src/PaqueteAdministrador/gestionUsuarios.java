@@ -40,11 +40,11 @@ public class gestionUsuarios extends conexion {
     private JLabel backgroundLabel;
 
     public gestionUsuarios() {
-        JFrame menuFrame = new JFrame("Gestion de Usuarios");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/gestion.png").getImage());
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Pantalla completa
-        menuFrame.setMinimumSize(new Dimension(800, 600));
+        JFrame frameGestionUsuarios = new JFrame("Gestion de Usuarios");
+        frameGestionUsuarios.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameGestionUsuarios.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/gestion.png").getImage());
+        frameGestionUsuarios.setExtendedState(JFrame.MAXIMIZED_BOTH); // Pantalla completa
+        frameGestionUsuarios.setMinimumSize(new Dimension(800, 600));
 
         // Cargar imagen de fondo
         ImageIcon background = new ImageIcon("src/PaqueteRecursos/fondos/admin.png");
@@ -102,8 +102,8 @@ public class gestionUsuarios extends conexion {
         tabbedPane1.addTab("Eliminar", PEliminar);
         backgroundLabel.add(tabbedPane1, BorderLayout.CENTER);
 
-        menuFrame.setContentPane(backgroundLabel);
-        menuFrame.setVisible(true);
+        frameGestionUsuarios.setContentPane(backgroundLabel);
+        frameGestionUsuarios.setVisible(true);
     }
 
     private void agregarComponentes() {

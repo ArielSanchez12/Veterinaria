@@ -10,7 +10,6 @@ public class conexion {
     String USER = "uxaryiotv2i6dr7y";
     String PASSWORD = "wcqK3cQnqmlDWAnyyqDt";
 
-
     public Connection connect() throws SQLException{
         return DriverManager.getConnection(URL,USER,PASSWORD);
     }

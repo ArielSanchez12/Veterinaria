@@ -1,5 +1,6 @@
 package PaqueteAdministrador;
 
+import PaqueteRecursos.conexion;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,8 +14,6 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
-
-import PaqueteRecursos.conexion;
 
 public class estadisticas extends conexion {
     public JPanel PEstadisticas;
@@ -30,16 +29,16 @@ public class estadisticas extends conexion {
 
     public estadisticas() {
 
-        JFrame menuFrame = new JFrame("Pantalla de Administrador");
-        menuFrame.setContentPane(PEstadisticas);
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setSize(1000, 600);
-        menuFrame.setPreferredSize(new Dimension(1000, 600));
-        menuFrame.setLocationRelativeTo(null);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/graficas.png").getImage());
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        menuFrame.pack();
-        menuFrame.setVisible(true);
+        JFrame frameEstadisticasAdministrador = new JFrame("Estadisticas");
+        frameEstadisticasAdministrador.setContentPane(PEstadisticas);
+        frameEstadisticasAdministrador.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameEstadisticasAdministrador.setSize(1000, 600);
+        frameEstadisticasAdministrador.setPreferredSize(new Dimension(1000, 600));
+        frameEstadisticasAdministrador.setLocationRelativeTo(null);
+        frameEstadisticasAdministrador.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/graficas.png").getImage());
+        frameEstadisticasAdministrador.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frameEstadisticasAdministrador.pack();
+        frameEstadisticasAdministrador.setVisible(true);
 
         verGráficaEstadísticaButton.addActionListener(new ActionListener() {
             @Override
@@ -65,7 +64,7 @@ public class estadisticas extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameEstadisticasAdministrador.dispose();
                 new administrador();
             }
         });
@@ -161,5 +160,4 @@ public class estadisticas extends conexion {
         panelT2.revalidate();
         panelT2.repaint();
     }
-
 }

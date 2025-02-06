@@ -13,19 +13,31 @@ import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
 import java.sql.*;
 
+/**
+ * La clase {@code historialMedico} representa una interfaz gráfica para visualizar y gestionar
+ * el historial médico de las mascotas. Permite cargar el historial desde una base de datos,
+ * mostrarlo en una tabla y exportarlo a un archivo PDF.
+ */
 public class historialMedico extends conexion {
+    /** Botón para cargar el historial médico. */
     public JButton verHistorialMedicoButton;
+    /** Botón para regresar a la pantalla anterior. */
     public JButton regresarButton;
+    /** Botón para exportar el historial médico a un archivo PDF. */
     public JButton imprimirPDFButton;
+    /** Panel de desplazamiento que contiene la tabla del historial médico. */
     private JScrollPane Historial;
 
+    /**
+     * Constructor de la clase {@code historialMedico}. Inicializa la interfaz gráfica
+     * y configura los componentes necesarios para visualizar y gestionar el historial médico.
+     */
     public historialMedico() {
-
-        JFrame menuFrame = new JFrame("Historial Medico");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/historial.png").getImage());
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        menuFrame.setMinimumSize(new Dimension(800, 600));
+        JFrame frameHistorialMedicoCliente = new JFrame("Historial Medico");
+        frameHistorialMedicoCliente.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameHistorialMedicoCliente.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/historial.png").getImage());
+        frameHistorialMedicoCliente.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frameHistorialMedicoCliente.setMinimumSize(new Dimension(800, 600));
 
         // Panel principal con fondo
         JPanel PHistorial = new JPanel() {
@@ -64,7 +76,6 @@ public class historialMedico extends conexion {
         regresarButton.setFont(new Font("Arial", Font.BOLD, 18));
         regresarButton.setPreferredSize(new Dimension(200, 50));
 
-
         // Agregar componentes al panel
         verh.gridx = 1; verh.gridy = 0; PHistorial.add(titulo, verh);
         verh.gridx = 1; verh.gridy = 1; PHistorial.add(Historial, verh);
@@ -73,9 +84,8 @@ public class historialMedico extends conexion {
         verh.gridx = 1; verh.gridy = 5; PHistorial.add(regresarButton, verh);
 
         // Mostrar el panel en el frame y hacerlo visible
-        menuFrame.setContentPane(PHistorial);
-        menuFrame.setVisible(true);
-
+        frameHistorialMedicoCliente.setContentPane(PHistorial);
+        frameHistorialMedicoCliente.setVisible(true);
 
         // Configurar el botón para cargar el historial médico
         verHistorialMedicoButton.addActionListener(e -> cargarHistorialMedico());
@@ -83,7 +93,7 @@ public class historialMedico extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameHistorialMedicoCliente.dispose();
                 new cliente();
             }
         });
@@ -97,6 +107,10 @@ public class historialMedico extends conexion {
         });
     }
 
+    /**
+     * Carga el historial médico desde la base de datos y lo muestra en una tabla.
+     * Si ocurre un error durante la carga, se muestra un mensaje de error.
+     */
     private void cargarHistorialMedico() {
         try (Connection conn = connect()) {
             String sql = "SELECT cedula, tipo_mascota, nombre_mascota, foto_mascota, sexo_mascota, tipo_servicio, motivo_cita FROM agendar_citas";
@@ -162,6 +176,11 @@ public class historialMedico extends conexion {
         }
     }
 
+    /**
+     * Exporta el historial médico a un archivo PDF. El usuario puede seleccionar la ubicación
+     * donde desea guardar el archivo. Si ocurre un error durante la generación del PDF,
+     * se muestra un mensaje de error.
+     */
     private void imprimirPDF() {
         // Crear un JFileChooser para seleccionar la ubicación donde guardar el archivo
         JFileChooser fileChooser = new JFileChooser();

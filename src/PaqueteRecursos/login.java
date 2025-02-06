@@ -14,51 +14,68 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Clase que representa la ventana de inicio de sesión para los usuarios del sistema.
+ * Permite a los usuarios autenticarse y acceder según su rol asignado.
+ */
 public class login extends conexion {
-    //public JPanel PLogin;
+    /** Campo de texto para ingresar el nombre de usuario. */
     private JTextField textField1;
+
+    /** Campo de contraseña para ingresar la clave de acceso. */
     private JPasswordField passwordField1;
-    private JComboBox comboBox1;
+
+    /** ComboBox para seleccionar el rol del usuario (Administrador, Cliente, Veterinario o Secretaria). */
+    private JComboBox<String> comboBox1;
+
+    /** Botón para confirmar el inicio de sesión. */
     private JButton ingresarButton;
+
+    /** Botón para regresar a la pantalla de inicio. */
     private JButton regresarButton;
+
+    /** Checkbox para mostrar u ocultar la contraseña ingresada. */
     private JCheckBox mostrarContraseniaCheckBox;
 
+    /**
+     * Constructor de la clase login.
+     * Configura la interfaz gráfica y los eventos de los componentes.
+     */
     public login() {
-        JFrame menuFrame = new JFrame("Login");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/login.png").getImage());
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
-        menuFrame.setMinimumSize(new Dimension(800, 600));
+        JFrame frameLogin = new JFrame("Login");
+        frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameLogin.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/login.png").getImage());
+        frameLogin.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frameLogin.setMinimumSize(new Dimension(800, 600));
 
-        // Panel principal con fondo
+        // Panel de fondo con imagen personalizada
         JPanel PLogin = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/log-reg.jpeg"); // Imagen de fondo
+                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/log-reg.jpeg");
                 g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        PLogin.setLayout(new GridBagLayout()); // Diseño responsivo
+        PLogin.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, -15, 35, 22); // Aumentar espacio entre componentes
+        gbc.insets = new Insets(15, -15, 35, 22);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Componentes
+        // Creación de componentes de la interfaz
         JLabel lblUsuario = new JLabel("Usuario");
         lblUsuario.setFont(new Font("Arial", Font.BOLD, 18));
-        lblUsuario.setForeground(new Color(255, 255, 255));
+        lblUsuario.setForeground(Color.WHITE);
         lblUsuario.setOpaque(true);
         lblUsuario.setBackground(Color.BLACK);
-
 
         textField1 = new JTextField(20);
         textField1.setFont(new Font("Arial", Font.PLAIN, 16));
 
         JLabel lblContrasenia = new JLabel("Contraseña");
         lblContrasenia.setFont(new Font("Arial", Font.BOLD, 18));
-        lblContrasenia.setForeground(new Color(255, 255, 255));
+        lblContrasenia.setForeground(Color.WHITE);
         lblContrasenia.setOpaque(true);
         lblContrasenia.setBackground(Color.BLACK);
 
@@ -79,7 +96,7 @@ public class login extends conexion {
         regresarButton.setFont(new Font("Arial", Font.BOLD, 18));
         regresarButton.setPreferredSize(new Dimension(200, 50));
 
-        // Agregar componentes al panel
+        // Posicionamiento de los componentes en el panel
         gbc.gridx = 0; gbc.gridy = 0; PLogin.add(lblUsuario, gbc);
         gbc.gridx = 1; PLogin.add(textField1, gbc);
         gbc.gridx = 0; gbc.gridy = 1; PLogin.add(lblContrasenia, gbc);
@@ -89,9 +106,13 @@ public class login extends conexion {
         gbc.gridx = 1; gbc.gridy = 4; PLogin.add(ingresarButton, gbc);
         gbc.gridx = 1; gbc.gridy = 5; PLogin.add(regresarButton, gbc);
 
-        menuFrame.setContentPane(PLogin);
-        menuFrame.setVisible(true);
+        frameLogin.setContentPane(PLogin);
+        frameLogin.setVisible(true);
 
+        /**
+         * Evento que maneja el inicio de sesión cuando se presiona el botón "Iniciar Sesión".
+         * Valida los datos ingresados y permite el acceso según el rol seleccionado.
+         */
         ingresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -120,44 +141,50 @@ public class login extends conexion {
 
                             switch (rol) {
                                 case "administrador" -> {
-                                    menuFrame.dispose();
+                                    frameLogin.dispose();
                                     new administrador();
                                 }
                                 case "cliente" -> {
-                                    menuFrame.dispose();
+                                    frameLogin.dispose();
                                     new cliente();
                                 }
                                 case "veterinario" -> {
-                                    menuFrame.dispose();
+                                    frameLogin.dispose();
                                     new veterinario();
                                 }
                                 case "secretaria" -> {
-                                    menuFrame.dispose();
+                                    frameLogin.dispose();
                                     new secretaria();
                                 }
                                 default -> JOptionPane.showMessageDialog(null, "No existe ese usuario en el rol actual, prueba con otro rol");
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Asegurese de que el usuario pertenece al rol seleccionado");
+                            JOptionPane.showMessageDialog(null, "Asegúrese de que el usuario pertenece al rol seleccionado");
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
                     }
                 } catch (SQLException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Error en clever cloud");
+                    JOptionPane.showMessageDialog(null, "Error en la base de datos");
                 }
             }
         });
 
+        /**
+         * Evento que permite regresar a la pantalla de inicio cuando se presiona el botón "Regresar al Inicio".
+         */
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameLogin.dispose();
                 new inicio();
             }
         });
 
+        /**
+         * Evento que permite mostrar u ocultar la contraseña ingresada cuando se interactúa con el checkbox.
+         */
         mostrarContraseniaCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

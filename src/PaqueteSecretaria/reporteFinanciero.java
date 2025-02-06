@@ -36,16 +36,16 @@ public class reporteFinanciero extends conexion {
     private List<Double> costos;
 
     public reporteFinanciero() {
-        JFrame menuFrame = new JFrame("Pantalla de Reportes");
-        menuFrame.setContentPane(PReportes);
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setSize(500, 300);
-        menuFrame.setPreferredSize(new Dimension(500, 300));
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/graficas.png").getImage());
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        menuFrame.setLocationRelativeTo(null);
-        menuFrame.pack();
-        menuFrame.setVisible(true);
+        JFrame frameReporteFinanciero = new JFrame("Pantalla de Reportes");
+        frameReporteFinanciero.setContentPane(PReportes);
+        frameReporteFinanciero.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameReporteFinanciero.setSize(500, 300);
+        frameReporteFinanciero.setPreferredSize(new Dimension(500, 300));
+        frameReporteFinanciero.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/graficas.png").getImage());
+        frameReporteFinanciero.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frameReporteFinanciero.setLocationRelativeTo(null);
+        frameReporteFinanciero.pack();
+        frameReporteFinanciero.setVisible(true);
 
         // Llenar los JComboBox
         for (int month = 1; month <= 12; month++) {
@@ -71,7 +71,7 @@ public class reporteFinanciero extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameReporteFinanciero.dispose();
                 new secretaria();
             }
         });

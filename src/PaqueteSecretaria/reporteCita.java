@@ -32,11 +32,11 @@ public class reporteCita extends conexion{
 
     public reporteCita() {
 
-        JFrame menuFrame = new JFrame("Reportes de Citas Médicas");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/graficas.png").getImage());
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
-        menuFrame.setMinimumSize(new Dimension(800, 600));
+        JFrame frameReporteCita = new JFrame("Reportes de Citas Médicas");
+        frameReporteCita.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameReporteCita.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/graficas.png").getImage());
+        frameReporteCita.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
+        frameReporteCita.setMinimumSize(new Dimension(800, 600));
 
         // Panel principal con fondo
         JPanel PReportesCitas = new JPanel() {
@@ -213,8 +213,8 @@ public class reporteCita extends conexion{
         gbc.gridx = 1; gbc.gridy = 12; PReportesCitas.add(imprimirReportePDFButton, gbc);
         gbc.gridx = 1; gbc.gridy = 13; PReportesCitas.add(regresarButton, gbc);
 
-        menuFrame.setContentPane(PReportesCitas);
-        menuFrame.setVisible(true);
+        frameReporteCita.setContentPane(PReportesCitas);
+        frameReporteCita.setVisible(true);
 
         crearReporteDeDiagnosticoButton.addActionListener(new ActionListener() {
             @Override
@@ -264,7 +264,7 @@ public class reporteCita extends conexion{
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameReporteCita.dispose();
                 new secretaria();
             }
         });

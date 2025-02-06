@@ -5,13 +5,30 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Clase que representa la ventana de inicio de la aplicación.
+ * Contiene opciones para registrar nuevos clientes, iniciar sesión o salir.
+ */
 public class inicio {
+    /** Panel principal de la ventana de inicio. */
     public JPanel PInicio;
+
+    /** Botón para registrar nuevos clientes. */
     private JButton registroParaClientesNuevosButton;
+
+    /** Botón para iniciar sesión. */
     private JButton inicioDeSesiónButton;
+
+    /** Botón para salir de la aplicación. */
     private JButton salirButton;
+
+    /** Etiqueta para mostrar el pie de página. */
     private JLabel pie;
 
+    /**
+     * Constructor de la clase inicio.
+     * Configura la interfaz gráfica, define la apariencia y asigna eventos a los botones.
+     */
     public inicio() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -19,17 +36,15 @@ public class inicio {
             e.printStackTrace();
         }
 
-        // Crear el marco principal
-        JFrame menuFrame = new JFrame("Inicio");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setSize(1000, 600);
-        menuFrame.setLocationRelativeTo(null);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/inicio.png").getImage());
+        // Creación y configuración de la ventana
+        JFrame frameInicio = new JFrame("Inicio");
+        frameInicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameInicio.setSize(1000, 600);
+        frameInicio.setLocationRelativeTo(null);
+        frameInicio.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/inicio.png").getImage());
+        frameInicio.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        // Establecer el marco en pantalla completa
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-        // Panel principal con fondo
+        // Configuración del panel de inicio con imagen de fondo
         PInicio = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -44,33 +59,28 @@ public class inicio {
                 int panelWidth = getWidth();
                 int panelHeight = getHeight();
 
-                // Calcular posiciones dinámicamente
                 int buttonWidth = 300;
                 int buttonHeight = 40;
                 int buttonX = (panelWidth - buttonWidth + 37) / 2;
-
-                // Margen entre botones
                 int buttonSpacing = 30;
-                int firstButtonY = (int) (panelHeight * 0.6); // 60% desde el inicio de la pantalla
+                int firstButtonY = (int) (panelHeight * 0.6);
 
-                // Ajustar los botones
+                // Posicionamiento de los botones
                 registroParaClientesNuevosButton.setBounds(buttonX, firstButtonY, buttonWidth, buttonHeight);
                 inicioDeSesiónButton.setBounds(buttonX, firstButtonY + buttonHeight + buttonSpacing, buttonWidth, buttonHeight);
                 salirButton.setBounds(buttonX, firstButtonY + 2 * (buttonHeight + buttonSpacing), buttonWidth, buttonHeight);
 
-                // Ajustar el pie de página
-                int pieWidth = 290; // Ancho fijo del pie
-                int pieHeight = 10; // Altura fija del pie
-                int pieX = (panelWidth - pieWidth + 37) / 2; // Centrar horizontalmente
-                int pieY = panelHeight - pieHeight - 10; // A 10 píxeles del borde inferior
+                // Posicionamiento del pie de página
+                int pieWidth = 290;
+                int pieHeight = 10;
+                int pieX = (panelWidth - pieWidth + 37) / 2;
+                int pieY = panelHeight - pieHeight - 10;
                 pie.setBounds(pieX, pieY, pieWidth, pieHeight);
             }
         };
-        PInicio.setLayout(null); // Seguimos usando un layout nulo para los cálculos manuales
+        PInicio.setLayout(null);
 
-
-
-        // Botones
+        // Creación y configuración de botones
         registroParaClientesNuevosButton = new JButton("Registro para Clientes Nuevos");
         registroParaClientesNuevosButton.setFont(new Font("Arial", Font.PLAIN, 18));
         registroParaClientesNuevosButton.setBackground(new Color(173, 216, 230));
@@ -86,23 +96,22 @@ public class inicio {
         salirButton.setBackground(new Color(255, 182, 193));
         PInicio.add(salirButton);
 
-        // Pie de página
-
+        // Configuración del pie de página
         pie.setText("© 2025 PetCarePro - Todos los derechos reservados");
         pie.setFont(new Font("Arial", Font.ITALIC, 12));
         pie.setForeground(Color.DARK_GRAY);
         PInicio.add(pie);
 
+        // Agregar el panel a la ventana y mostrarla
+        frameInicio.setContentPane(PInicio);
+        frameInicio.setVisible(true);
 
-        menuFrame.setContentPane(PInicio);
-        menuFrame.setVisible(true);
-
-        // Listeners
+        // Eventos de los botones
         registroParaClientesNuevosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new registro();
-                menuFrame.dispose();
+                frameInicio.dispose();
             }
         });
 
@@ -110,7 +119,7 @@ public class inicio {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new login();
-                menuFrame.dispose();
+                frameInicio.dispose();
             }
         });
 

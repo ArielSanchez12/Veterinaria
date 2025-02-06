@@ -8,40 +8,56 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * Clase que representa la ventana de registro de nuevos usuarios en el sistema.
+ * Permite la creación de cuentas para clientes.
+ */
 public class registro extends conexion {
+
+    /** Campo de texto para ingresar el nombre de usuario. */
     private JTextField textField1;
+
+    /** Campo de contraseña para ingresar la clave de acceso. */
     private JPasswordField passwordField1;
+
+    /** Botón para confirmar el registro de un nuevo usuario. */
     private JButton registrarmeButton;
+
+    /** Botón para regresar a la pantalla de inicio. */
     private JButton regresarAlInicioButton;
+
+    /** Checkbox para mostrar u ocultar la contraseña ingresada. */
     private JCheckBox mostrarContraseniaCheckBox;
 
+    /**
+     * Constructor de la clase registro.
+     * Configura la interfaz gráfica y los eventos de los componentes.
+     */
     public registro() {
+        JFrame frameRegistroClientesNuevos = new JFrame("Registro");
+        frameRegistroClientesNuevos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameRegistroClientesNuevos.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/nuevo.png").getImage());
+        frameRegistroClientesNuevos.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frameRegistroClientesNuevos.setMinimumSize(new Dimension(800, 600));
 
-        JFrame menuFrame = new JFrame("Registro");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/nuevo.png").getImage());
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
-        menuFrame.setMinimumSize(new Dimension(800, 600));
-
-        // Panel principal con fondo
+        // Panel de fondo con imagen personalizada
         JPanel PRegistro = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/log-reg.jpeg"); // Imagen de fondo
+                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/log-reg.jpeg");
                 g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        PRegistro.setLayout(new GridBagLayout()); // Diseño responsivo
-
+        PRegistro.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, -15, 60, 22); // Aumentar espacio entre componentes
+        gbc.insets = new Insets(15, -15, 60, 22);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Componentes
+        // Creación de componentes de la interfaz
         JLabel lblUsuario = new JLabel("Usuario");
         lblUsuario.setFont(new Font("Arial", Font.BOLD, 18));
-        lblUsuario.setForeground(new Color(255, 255, 255));
+        lblUsuario.setForeground(Color.WHITE);
         lblUsuario.setOpaque(true);
         lblUsuario.setBackground(Color.BLACK);
 
@@ -50,7 +66,7 @@ public class registro extends conexion {
 
         JLabel lblContrasenia = new JLabel("Contraseña");
         lblContrasenia.setFont(new Font("Arial", Font.BOLD, 18));
-        lblContrasenia.setForeground(new Color(255, 255, 255));
+        lblContrasenia.setForeground(Color.WHITE);
         lblContrasenia.setOpaque(true);
         lblContrasenia.setBackground(Color.BLACK);
 
@@ -77,16 +93,19 @@ public class registro extends conexion {
         gbc.gridx = 1; gbc.gridy = 4; PRegistro.add(registrarmeButton, gbc);
         gbc.gridx = 1; gbc.gridy = 5; PRegistro.add(regresarAlInicioButton, gbc);
 
-        menuFrame.setContentPane(PRegistro);
-        menuFrame.setVisible(true);
+        frameRegistroClientesNuevos.setContentPane(PRegistro);
+        frameRegistroClientesNuevos.setVisible(true);
 
+        /**
+         * Evento que maneja el registro de un nuevo usuario cuando se presiona el botón "Registrarme".
+         * Inserta los datos en la base de datos y limpia los campos después del registro.
+         */
         registrarmeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nombreCliente = textField1.getText();
                 String contraCliente = passwordField1.getText();
-                String rolCliente;
-                rolCliente = "cliente";
+                String rolCliente = "cliente";
 
                 if (nombreCliente.isEmpty() || contraCliente.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos");
@@ -109,13 +128,20 @@ public class registro extends conexion {
             }
         });
 
+        /**
+         * Evento que permite regresar a la pantalla de inicio cuando se presiona el botón "Regresar al Inicio".
+         */
         regresarAlInicioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameRegistroClientesNuevos.dispose();
                 new inicio();
             }
         });
+
+        /**
+         * Evento que permite mostrar u ocultar la contraseña ingresada cuando se interactúa con el checkbox.
+         */
         mostrarContraseniaCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

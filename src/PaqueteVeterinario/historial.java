@@ -23,11 +23,11 @@ public class historial extends conexion {
 
     public historial() {
 
-        JFrame menuFrame = new JFrame("Historial para el Veterinario");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/historial.png").getImage());
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        menuFrame.setMinimumSize(new Dimension(800, 600));
+        JFrame frameHistorialVeterinario = new JFrame("Historial para el Veterinario");
+        frameHistorialVeterinario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameHistorialVeterinario.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/historial.png").getImage());
+        frameHistorialVeterinario.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frameHistorialVeterinario.setMinimumSize(new Dimension(800, 600));
 
         // Panel principal con fondo
         PHistorial = new JPanel() {  // Ahora es un atributo de la clase
@@ -74,8 +74,8 @@ public class historial extends conexion {
         verh.gridx = 1; verh.gridy = 5; PHistorial.add(regresarButton, verh);
 
         // Mostrar el panel en el frame y hacerlo visible
-        menuFrame.setContentPane(PHistorial);
-        menuFrame.setVisible(true);
+        frameHistorialVeterinario.setContentPane(PHistorial);
+        frameHistorialVeterinario.setVisible(true);
 
         historialTable = new JTable();
         HistorialVet.setViewportView(historialTable);
@@ -83,7 +83,7 @@ public class historial extends conexion {
         verHistorialButton.addActionListener(e -> cargarHistorial());
 
         regresarButton.addActionListener(e -> {
-            menuFrame.dispose();
+            frameHistorialVeterinario.dispose();
             new veterinario();
         });
 

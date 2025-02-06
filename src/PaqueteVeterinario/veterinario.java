@@ -15,11 +15,11 @@ public class veterinario {
 
 
     public veterinario() {
-        JFrame menuFrame = new JFrame("Menu Veterinario");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/veterinario.png").getImage());
-        menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
-        menuFrame.setMinimumSize(new Dimension(800, 600));
+        JFrame frameVeterinario = new JFrame("Menu Veterinario");
+        frameVeterinario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVeterinario.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/veterinario.png").getImage());
+        frameVeterinario.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
+        frameVeterinario.setMinimumSize(new Dimension(800, 600));
 
         // Panel principal con fondo
         JPanel PVeterinario = new JPanel() {
@@ -75,13 +75,13 @@ public class veterinario {
         gbc.gridx = 1; gbc.gridy = 6; PVeterinario.add(diagnosticosYTratamientosButton, gbc);
         gbc.gridx = 1; gbc.gridy = 7; PVeterinario.add(salirButton, gbc);
 
-        menuFrame.setContentPane(PVeterinario);
-        menuFrame.setVisible(true);
+        frameVeterinario.setContentPane(PVeterinario);
+        frameVeterinario.setVisible(true);
 
         gestiónDeCitasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameVeterinario.dispose();
                 citas ventanaCitas = new citas();
                 ventanaCitas.setVisible(true);
             }
@@ -91,7 +91,7 @@ public class veterinario {
         historialMédicoDeMascotasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameVeterinario.dispose();
                 new historial();
             }
         });
@@ -99,7 +99,7 @@ public class veterinario {
         eliminarCitaYTrataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameVeterinario.dispose();
                 new eliminar();
             }
         });
@@ -107,7 +107,7 @@ public class veterinario {
         salirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameVeterinario.dispose();
                 new login();
             }
         });
@@ -115,7 +115,7 @@ public class veterinario {
         diagnosticosYTratamientosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                frameVeterinario.dispose();
                 new DiagnosticoyTratamiento();
             }
         });

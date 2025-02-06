@@ -25,11 +25,11 @@ public class DiagnosticoyTratamiento extends conexion {
 
     public DiagnosticoyTratamiento() {
 
-        JFrame frame = new JFrame("Aplicar el Diagnostico y el Tratamiento a la mascota");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Pantalla completa
-        frame.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/veterinario.png").getImage());
-        frame.setMinimumSize(new Dimension(800, 600));
+        JFrame frameDiagnosticoTratamiento = new JFrame("Aplicar el Diagnostico y el Tratamiento a la mascota");
+        frameDiagnosticoTratamiento.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameDiagnosticoTratamiento.setExtendedState(JFrame.MAXIMIZED_BOTH); // Pantalla completa
+        frameDiagnosticoTratamiento.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/veterinario.png").getImage());
+        frameDiagnosticoTratamiento.setMinimumSize(new Dimension(800, 600));
         PDiagTrat.setPreferredSize(new Dimension(700, 450));
 
         // Crear un panel personalizado que muestra la imagen de fondo
@@ -40,8 +40,8 @@ public class DiagnosticoyTratamiento extends conexion {
         PGrande.setOpaque(false);
         backgroundPanel.add(PGrande, BorderLayout.CENTER);
 
-        frame.setContentPane(backgroundPanel);
-        frame.setVisible(true);
+        frameDiagnosticoTratamiento.setContentPane(backgroundPanel);
+        frameDiagnosticoTratamiento.setVisible(true);
 
 
         buscarButton.addActionListener(new ActionListener() {
@@ -61,7 +61,7 @@ public class DiagnosticoyTratamiento extends conexion {
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                frameDiagnosticoTratamiento.dispose();
                 new veterinario();
             }
         });
