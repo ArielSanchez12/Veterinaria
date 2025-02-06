@@ -6,7 +6,7 @@
 
 ## 📚 Material 📚
 
-Documentacion, Dependencias y .EXE están en el siguiente enlace:  
+Documentacion, Dependencias y Ejecutables están en el siguiente enlace:  
 🔗 [Documentación del proyecto](https://epnecuador-my.sharepoint.com/:f:/g/personal/richard_padilla_epn_edu_ec/EqtsC8arBKJNvTB5bgMPd5IBUp3cqpY51sZFFVENUWY1OQ?e=3zoh2M)  
 
 ---
