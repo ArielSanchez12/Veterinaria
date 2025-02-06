@@ -17,9 +17,6 @@ public class gestionUsuarios extends conexion {
     private JTextField textField1;
     private JPasswordField passwordField1;
     private JButton agregarButton;
-    private JCheckBox administradorCheckBox;
-    private JCheckBox veterinarioCheckBox;
-    private JCheckBox secretariaCheckBox;
     private JButton regresarButton;
     private JTextField textField2;
     private JButton actualizarButton;
@@ -113,22 +110,30 @@ public class gestionUsuarios extends conexion {
         PGestion.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, -15, 35, 15); // Aumentar espacio entre componentes
+        gbc.insets = new Insets(15, -15, 35, 22); // Aumentar espacio entre componentes
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Componentes
         JLabel titulo = new JLabel("Agregar Usuarios", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
-        titulo.setForeground(new Color(0, 0, 0));
+        titulo.setForeground(new Color(255, 255, 255));
+        titulo.setOpaque(true);
+        titulo.setBackground(Color.BLACK);
 
-        JLabel usuarioLabel = new JLabel("Usuario:");
+        JLabel usuarioLabel = new JLabel("Usuario", SwingConstants.CENTER);
         usuarioLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        usuarioLabel.setForeground(new Color(255, 255, 255));
+        usuarioLabel.setOpaque(true);
+        usuarioLabel.setBackground(Color.BLACK);
 
         textField1 = new JTextField(20);
         textField1.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        JLabel contrasenaLabel = new JLabel("Contraseña:");
+        JLabel contrasenaLabel = new JLabel("Contraseña");
         contrasenaLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        contrasenaLabel.setForeground(new Color(255, 255, 255));
+        contrasenaLabel.setOpaque(true);
+        contrasenaLabel.setBackground(Color.BLACK);
 
         passwordField1 = new JPasswordField(20);
         passwordField1.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -228,22 +233,30 @@ public class gestionUsuarios extends conexion {
         PActualizar.setLayout(new GridBagLayout());
 
         GridBagConstraints act = new GridBagConstraints();
-        act.insets = new Insets(15, -15, 35, 15); // Aumentar espacio entre componentes
+        act.insets = new Insets(15, -15, 35, 22); // Aumentar espacio entre componentes
         act.fill = GridBagConstraints.HORIZONTAL;
 
         // Componentes
         JLabel titulo2 = new JLabel("Actualizar Usuarios", SwingConstants.CENTER);
         titulo2.setFont(new Font("Arial", Font.BOLD, 24));
-        titulo2.setForeground(new Color(0, 0, 0));
+        titulo2.setForeground(new Color(255, 255, 255));
+        titulo2.setOpaque(true);
+        titulo2.setBackground(Color.BLACK);
 
-        JLabel usuarioLabel2 = new JLabel("Usuario a Actualizar:");
+        JLabel usuarioLabel2 = new JLabel("Usuario a Actualizar");
         usuarioLabel2.setFont(new Font("Arial", Font.BOLD, 18));
+        usuarioLabel2.setForeground(new Color(255, 255, 255));
+        usuarioLabel2.setOpaque(true);
+        usuarioLabel2.setBackground(Color.BLACK);
 
         textField2 = new JTextField(20);
         textField2.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        JLabel contrasenaLabel2 = new JLabel("Nueva Contraseña:");
+        JLabel contrasenaLabel2 = new JLabel("Nueva Contraseña");
         contrasenaLabel2.setFont(new Font("Arial", Font.BOLD, 18));
+        contrasenaLabel2.setForeground(new Color(255, 255, 255));
+        contrasenaLabel2.setOpaque(true);
+        contrasenaLabel2.setBackground(Color.BLACK);
 
         passwordField2 = new JPasswordField(20);
         passwordField2.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -353,13 +366,15 @@ public class gestionUsuarios extends conexion {
         PVer.setLayout(new GridBagLayout());
 
         GridBagConstraints ver = new GridBagConstraints();
-        ver.insets = new Insets(15, -15, 35, 15); // Aumentar espacio entre componentes
+        ver.insets = new Insets(15, -15, 35, 22); // Aumentar espacio entre componentes
         ver.fill = GridBagConstraints.HORIZONTAL;
 
         // Componentes
         JLabel titulo3 = new JLabel("Ver Usuarios registrados segun su Rol", SwingConstants.CENTER);
         titulo3.setFont(new Font("Arial", Font.BOLD, 24));
-        titulo3.setForeground(new Color(0, 0, 0));
+        titulo3.setForeground(new Color(255, 255, 255));
+        titulo3.setOpaque(true);
+        titulo3.setBackground(Color.BLACK);
 
         comboBox3 = new JComboBox<>(new String[]{"administrador", "veterinario", "secretaria", "cliente"});
         comboBox3.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -461,22 +476,30 @@ public class gestionUsuarios extends conexion {
         PEliminar.setLayout(new GridBagLayout());
 
         GridBagConstraints elim = new GridBagConstraints();
-        elim.insets = new Insets(15, -15, 35, 15); // Aumentar espacio entre componentes
+        elim.insets = new Insets(15, -15, 35, 22); // Aumentar espacio entre componentes
         elim.fill = GridBagConstraints.HORIZONTAL;
 
         // Componentes
         JLabel titulo4 = new JLabel("Eliminar Usuario de la Base de Datos", SwingConstants.CENTER);
         titulo4.setFont(new Font("Arial", Font.BOLD, 24));
-        titulo4.setForeground(new Color(0, 0, 0));
+        titulo4.setForeground(new Color(255, 255, 255));
+        titulo4.setOpaque(true);
+        titulo4.setBackground(Color.BLACK);
 
-        JLabel usuarioLabel3 = new JLabel("Usuario a Eliminar:");
+        JLabel usuarioLabel3 = new JLabel("Usuario a Eliminar");
         usuarioLabel3.setFont(new Font("Arial", Font.BOLD, 18));
+        usuarioLabel3.setForeground(new Color(255, 255, 255));
+        usuarioLabel3.setOpaque(true);
+        usuarioLabel3.setBackground(Color.BLACK);
 
         textField3 = new JTextField(20);
         textField3.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        JLabel rolEliminarLabel = new JLabel("Rol:");
+        JLabel rolEliminarLabel = new JLabel("Rol", SwingConstants.CENTER);
         rolEliminarLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        rolEliminarLabel.setForeground(new Color(255, 255, 255));
+        rolEliminarLabel.setOpaque(true);
+        rolEliminarLabel.setBackground(Color.BLACK);
 
         comboBox4 = new JComboBox<>(new String[]{"administrador", "veterinario", "secretaria", "cliente"});
         comboBox4.setFont(new Font("Arial", Font.PLAIN, 16));

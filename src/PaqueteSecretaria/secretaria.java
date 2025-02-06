@@ -37,7 +37,9 @@ public class secretaria {
 
         JLabel titulo = new JLabel("MENU SECRETARIA", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
-        titulo.setForeground(new Color(0, 0, 0));
+        titulo.setForeground(new Color(255, 255, 255));
+        titulo.setOpaque(true);
+        titulo.setBackground(Color.BLACK);
 
         crearReportesButton = new JButton("Crear Reporte Financiero");
         crearReportesButton.setFont(new Font("Arial", Font.BOLD, 18));

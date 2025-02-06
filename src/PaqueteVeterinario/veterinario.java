@@ -48,7 +48,7 @@ public class veterinario {
 
         gestiónDeCitasButton = new JButton("Gestion de Citas");
         gestiónDeCitasButton.setFont(new Font("Arial", Font.BOLD, 18));
-        gestiónDeCitasButton.setPreferredSize(new Dimension(250, 50));
+        gestiónDeCitasButton.setPreferredSize(new Dimension(300, 50));
 
         eliminarCitaYTrataButton = new JButton("Eliminar Citas");
         eliminarCitaYTrataButton.setFont(new Font("Arial", Font.BOLD, 18));

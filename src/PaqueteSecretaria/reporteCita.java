@@ -50,66 +50,127 @@ public class reporteCita extends conexion{
         PReportesCitas.setLayout(new GridBagLayout()); // Diseño responsivo
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, -15, 20, 15); // Aumentar espacio entre componentes
+        gbc.insets = new Insets(10, -15, 20, 22); // Aumentar espacio entre componentes
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Componentes
-        JLabel titulo = new JLabel("Buscar Cita para generar un Reporte", SwingConstants.CENTER);
-        titulo.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 15));
-        titulo.setForeground(new Color(0, 0, 0));
+        JLabel titulo = new JLabel("Buscar cita para generar un Reporte", SwingConstants.CENTER);
+        titulo.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 24));
+        titulo.setForeground(new Color(255, 255, 255));
+        titulo.setOpaque(true);
+        titulo.setBackground(Color.BLACK);
 
-        JLabel ingresarCodCita = new JLabel("Ingresar el codigo de la cita:", SwingConstants.CENTER);
+        JLabel ingresarCodCita = new JLabel("Buscar por codigo de la cita", SwingConstants.CENTER);
         ingresarCodCita.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 15));
-        ingresarCodCita.setForeground(new Color(0, 0, 0));
+        ingresarCodCita.setForeground(new Color(255, 255, 255));
+        ingresarCodCita.setOpaque(true);
+        ingresarCodCita.setBackground(Color.BLACK);
 
         textField1 = new JTextField(20);
         textField1.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 16));
 
         JLabel tituloVet = new JLabel("Pet Care Pro", SwingConstants.CENTER);
         tituloVet.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 15));
-        tituloVet.setForeground(new Color(0, 0, 0));
+        tituloVet.setForeground(new Color(255, 255, 255));
+        tituloVet.setOpaque(true);
+        tituloVet.setBackground(Color.BLACK);
 
-        JLabel L1 = new JLabel("Codigo de cita:", SwingConstants.CENTER);
+        JLabel L1 = new JLabel("Codigo de cita", SwingConstants.CENTER);
         L1.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 15));
-        L1.setForeground(new Color(0, 0, 0));
+        L1.setForeground(new Color(255, 255, 255));
+        L1.setOpaque(true);
+        L1.setBackground(Color.BLACK);
 
-        JLabel L2 = new JLabel("Cedula del dueño:", SwingConstants.CENTER);
+        JLabel L2 = new JLabel("Cedula del dueño", SwingConstants.CENTER);
         L2.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 15));
-        L2.setForeground(new Color(0, 0, 0));
+        L2.setForeground(new Color(255, 255, 255));
+        L2.setOpaque(true);
+        L2.setBackground(Color.BLACK);
 
-        JLabel L3 = new JLabel("Tipo de mascota:", SwingConstants.CENTER);
+        JLabel L3 = new JLabel("Tipo de mascota", SwingConstants.CENTER);
         L3.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 15));
-        L3.setForeground(new Color(0, 0, 0));
+        L3.setForeground(new Color(255, 255, 255));
+        L3.setOpaque(true);
+        L3.setBackground(Color.BLACK);
 
-        JLabel L4 = new JLabel("Diagnostico:", SwingConstants.CENTER);
+        JLabel L4 = new JLabel("Diagnostico", SwingConstants.CENTER);
         L4.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 15));
-        L4.setForeground(new Color(0, 0, 0));
+        L4.setForeground(new Color(255, 255, 255));
+        L4.setOpaque(true);
+        L4.setBackground(Color.BLACK);
 
-        JLabel L5 = new JLabel("Fecha y hora:", SwingConstants.CENTER);
+        JLabel L5 = new JLabel("Fecha y hora", SwingConstants.CENTER);
         L5.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 15));
-        L5.setForeground(new Color(0, 0, 0));
+        L5.setForeground(new Color(255, 255, 255));
+        L5.setOpaque(true);
+        L5.setBackground(Color.BLACK);
 
-        JLabel L6 = new JLabel("Nombre de la mascota:", SwingConstants.CENTER);
+        JLabel L6 = new JLabel("Nombre de la mascota", SwingConstants.CENTER);
         L6.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 15));
-        L6.setForeground(new Color(0, 0, 0));
+        L6.setForeground(new Color(255, 255, 255));
+        L6.setOpaque(true);
+        L6.setBackground(Color.BLACK);
 
-        JLabel L7 = new JLabel("Sexo de la mascota::", SwingConstants.CENTER);
+        JLabel L7 = new JLabel("Sexo de la mascota", SwingConstants.CENTER);
         L7.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 15));
-        L7.setForeground(new Color(0, 0, 0));
+        L7.setForeground(new Color(255, 255, 255));
+        L7.setOpaque(true);
+        L7.setBackground(Color.BLACK);
 
-        JLabel L8 = new JLabel("Tratamiento:", SwingConstants.CENTER);
+        JLabel L8 = new JLabel("Tratamiento", SwingConstants.CENTER);
         L8.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 15));
-        L8.setForeground(new Color(0, 0, 0));
+        L8.setForeground(new Color(255, 255, 255));
+        L8.setOpaque(true);
+        L8.setBackground(Color.BLACK);
 
         // Inicialización de los JLabel para los datos obtenidos de la base de datos con alineación centrada
         LCodCita = new JLabel("", SwingConstants.CENTER);
+        LCodCita.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 12));
+        LCodCita.setForeground(new Color(0, 0, 0));
+        LCodCita.setOpaque(true);
+        LCodCita.setBackground(Color.GRAY);
+
         LCedula = new JLabel("", SwingConstants.CENTER);
+        LCedula.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 12));
+        LCedula.setForeground(new Color(0, 0, 0));
+        LCedula.setOpaque(true);
+        LCedula.setBackground(Color.GRAY);
+
         LTipoMascota = new JLabel("", SwingConstants.CENTER);
+        LTipoMascota.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 12));
+        LTipoMascota.setForeground(new Color(0, 0, 0));
+        LTipoMascota.setOpaque(true);
+        LTipoMascota.setBackground(Color.GRAY);
+
         LDiagnostico = new JLabel("", SwingConstants.CENTER);
+        LDiagnostico.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 12));
+        LDiagnostico.setForeground(new Color(0, 0, 0));
+        LDiagnostico.setOpaque(true);
+        LDiagnostico.setBackground(Color.GRAY);
+
         LFechaHora = new JLabel("", SwingConstants.CENTER);
+        LFechaHora.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 12));
+        LFechaHora.setForeground(new Color(0, 0, 0));
+        LFechaHora.setOpaque(true);
+        LFechaHora.setBackground(Color.GRAY);
+
         LNombreMascota = new JLabel("", SwingConstants.CENTER);
+        LNombreMascota.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 12));
+        LNombreMascota.setForeground(new Color(0, 0, 0));
+        LNombreMascota.setOpaque(true);
+        LNombreMascota.setBackground(Color.GRAY);
+
         LSexoMascota = new JLabel("", SwingConstants.CENTER);
+        LSexoMascota.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 12));
+        LSexoMascota.setForeground(new Color(0, 0, 0));
+        LSexoMascota.setOpaque(true);
+        LSexoMascota.setBackground(Color.GRAY);
+
         LTratamiento = new JLabel("", SwingConstants.CENTER);
+        LTratamiento.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 12));
+        LTratamiento.setForeground(new Color(0, 0, 0));
+        LTratamiento.setOpaque(true);
+        LTratamiento.setBackground(Color.GRAY);
 
         // Ajustar el GridBagConstraints para que los datos se alineen correctamente
         gbc.fill = GridBagConstraints.HORIZONTAL; // Mantener el llenado horizontal

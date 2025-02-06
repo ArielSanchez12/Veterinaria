@@ -35,16 +35,21 @@ public class eliminarRegistro extends conexion {
         PEliminarR.setLayout(new GridBagLayout()); // Diseño responsivo
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, -15, 35, 15); // Aumentar espacio entre componentes
+        gbc.insets = new Insets(15, -15, 35, 22); // Aumentar espacio entre componentes
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Componentes
         JLabel titulo = new JLabel("Eliminar el Registro de la Mascota", SwingConstants.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 24));
-        titulo.setForeground(new Color(0, 0, 0));
+        titulo.setFont(new Font("Arial", Font.BOLD, 20));
+        titulo.setForeground(new Color(255, 255, 255));
+        titulo.setOpaque(true);
+        titulo.setBackground(Color.BLACK);
 
-        JLabel LCedula = new JLabel("Cedula con la que se registro a la mascota:");
-        LCedula.setFont(new Font("Arial", Font.BOLD, 18));
+        JLabel LCedula = new JLabel("Buscar y eliminar por cedula");
+        LCedula.setFont(new Font("Arial", Font.BOLD, 20));
+        titulo.setForeground(new Color(255, 255, 255));
+        titulo.setOpaque(true);
+        titulo.setBackground(Color.BLACK);
 
         textField1 = new JTextField(20);
         textField1.setFont(new Font("Arial", Font.PLAIN, 16));

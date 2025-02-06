@@ -32,6 +32,16 @@ public class registrarMascota extends conexion {
     public JButton agendarCitaButton;
     public JButton regresarButton;
     public JLabel fotoLabel;
+    public JLabel LCed;
+    public JLabel LTipoMas;
+    public JLabel LNomMas;
+    public JLabel LFotoMas;
+    public JLabel LSexMas;
+    public JLabel LTipoServ;
+    public JLabel LMotivo;
+    public JLabel LObserv;
+    private JLabel LTitulo;
+    private JLabel LFormato;
 
     public File fotoMascota; // Archivo seleccionado
 
@@ -50,6 +60,48 @@ public class registrarMascota extends conexion {
         // Hacer el panel PAgendar transparente para ver la imagen de fondo
         PAgendar.setOpaque(false);
         backgroundPanel.add(PAgendar, BorderLayout.CENTER);
+
+
+        LTitulo.setFont(new Font("Arial", Font.BOLD, 24));
+        LTitulo.setForeground(new Color(255, 255, 255));
+        LTitulo.setOpaque(true);
+        LTitulo.setBackground(Color.BLACK);
+
+        LCed.setBorder(BorderFactory.createEmptyBorder(0, 150, 0, 0));
+        LCed.setFont(new Font("Arial", Font.BOLD, 15));
+        LCed.setForeground(new Color(0, 0, 0));
+
+        LTipoMas.setBorder(BorderFactory.createEmptyBorder(0, 150, 0, 0));
+        LTipoMas.setFont(new Font("Arial", Font.BOLD, 15));
+        LTipoMas.setForeground(new Color(0, 0, 0));
+
+        LNomMas.setBorder(BorderFactory.createEmptyBorder(0, 180, 0, 0));
+        LNomMas.setFont(new Font("Arial", Font.BOLD, 15));
+        LNomMas.setForeground(new Color(0, 0, 0));
+
+        LFotoMas.setBorder(BorderFactory.createEmptyBorder(0, 180, 0, 0));
+        LFotoMas.setFont(new Font("Arial", Font.BOLD, 15));
+        LFotoMas.setForeground(new Color(0, 0, 0));
+
+        LFormato.setFont(new Font("Arial", Font.BOLD, 10));
+        LFormato.setForeground(new Color(255, 0, 0));
+
+        LSexMas.setBorder(BorderFactory.createEmptyBorder(0, 180, 0, 0));
+        LSexMas.setFont(new Font("Arial", Font.BOLD, 15));
+        LSexMas.setForeground(new Color(0, 0, 0));
+
+        LTipoServ.setBorder(BorderFactory.createEmptyBorder(0, 180, 0, 0));
+        LTipoServ.setFont(new Font("Arial", Font.BOLD, 15));
+        LTipoServ.setForeground(new Color(0, 0, 0));
+
+        LMotivo.setBorder(BorderFactory.createEmptyBorder(0, 180, 0, 0));
+        LMotivo.setFont(new Font("Arial", Font.BOLD, 15));
+        LMotivo.setForeground(new Color(0, 0, 0));
+
+        LObserv.setBorder(BorderFactory.createEmptyBorder(0, 180, 0, 0));
+        LObserv.setFont(new Font("Arial", Font.BOLD, 15));
+        LObserv.setForeground(new Color(0, 0, 0));
+
 
         frame.setContentPane(backgroundPanel);
         frame.setVisible(true);

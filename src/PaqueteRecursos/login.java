@@ -42,17 +42,26 @@ public class login extends conexion {
         PLogin.setLayout(new GridBagLayout()); // Diseño responsivo
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, -15, 35, 15); // Aumentar espacio entre componentes
+        gbc.insets = new Insets(15, -15, 35, 22); // Aumentar espacio entre componentes
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Componentes
-        JLabel lblUsuario = new JLabel("Usuario:");
+        JLabel lblUsuario = new JLabel("Usuario");
         lblUsuario.setFont(new Font("Arial", Font.BOLD, 18));
+        lblUsuario.setForeground(new Color(255, 255, 255));
+        lblUsuario.setOpaque(true);
+        lblUsuario.setBackground(Color.BLACK);
+
+
         textField1 = new JTextField(20);
         textField1.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        JLabel lblContrasenia = new JLabel("Contraseña:");
+        JLabel lblContrasenia = new JLabel("Contraseña");
         lblContrasenia.setFont(new Font("Arial", Font.BOLD, 18));
+        lblContrasenia.setForeground(new Color(255, 255, 255));
+        lblContrasenia.setOpaque(true);
+        lblContrasenia.setBackground(Color.BLACK);
+
         passwordField1 = new JPasswordField(20);
         passwordField1.setFont(new Font("Arial", Font.PLAIN, 16));
 

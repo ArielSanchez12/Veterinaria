@@ -46,8 +46,10 @@ public class historial extends conexion {
 
         // Componentes
         JLabel titulo = new JLabel("Ver el Historial Medico de las Mascotas", SwingConstants.CENTER);
-        titulo.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 24));
-        titulo.setForeground(new Color(0, 0, 0));
+        titulo.setFont(new Font("Arial", Font.BOLD, 24));
+        titulo.setForeground(new Color(255, 255, 255));
+        titulo.setOpaque(true);
+        titulo.setBackground(Color.BLACK);
 
         HistorialVet = new JScrollPane();
         HistorialVet.setPreferredSize(new Dimension(750, 200));
