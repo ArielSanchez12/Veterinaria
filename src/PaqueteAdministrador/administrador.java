@@ -1,10 +1,15 @@
 package PaqueteAdministrador;
 
 import PaqueteRecursos.login;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Clase que representa la interfaz gráfica del menú de administrador.
@@ -28,7 +33,7 @@ public class administrador {
         // Configuración de la ventana principal
         JFrame frameAdministrador = new JFrame("Menu Administrador");
         frameAdministrador.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameAdministrador.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/administrador.png").getImage());
+        frameAdministrador.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/administrador.png")).getImage());
         frameAdministrador.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
         frameAdministrador.setMinimumSize(new Dimension(800, 600));
 
@@ -37,8 +42,17 @@ public class administrador {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/admin.jpeg"); // Imagen de fondo
-                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+                InputStream imgStream = getClass().getClassLoader().getResourceAsStream("PaqueteRecursos/fondos/admin.jpeg");
+                if (imgStream != null) {
+                    try {
+                        BufferedImage background = ImageIO.read(imgStream);
+                        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println("No se pudo cargar la imagen.");
+                }
             }
         };
         PAdministrador.setLayout(new GridBagLayout()); // Diseño responsivo

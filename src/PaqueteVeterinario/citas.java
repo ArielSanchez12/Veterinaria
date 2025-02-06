@@ -36,7 +36,7 @@ public class citas extends JFrame {
         setTitle("Gestor de Citas Veterinarias");
         setSize(600, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/veterinario.png").getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/veterinario.png")).getImage());
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         inicializarComponentes();

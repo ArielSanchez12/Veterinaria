@@ -5,12 +5,16 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,7 +38,7 @@ public class reporteCita extends conexion{
 
         JFrame frameReporteCita = new JFrame("Reportes de Citas Médicas");
         frameReporteCita.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameReporteCita.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/graficas.png").getImage());
+        frameReporteCita.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/graficas.png")).getImage());
         frameReporteCita.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
         frameReporteCita.setMinimumSize(new Dimension(800, 600));
 
@@ -43,8 +47,17 @@ public class reporteCita extends conexion{
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/secre.jpeg"); // Imagen de fondo
-                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+                InputStream imgStream = getClass().getClassLoader().getResourceAsStream("PaqueteRecursos/fondos/secre.jpeg");
+                if (imgStream != null) {
+                    try {
+                        BufferedImage background = ImageIO.read(imgStream);
+                        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println("No se pudo cargar la imagen.");
+                }
             }
         };
         PReportesCitas.setLayout(new GridBagLayout()); // Diseño responsivo

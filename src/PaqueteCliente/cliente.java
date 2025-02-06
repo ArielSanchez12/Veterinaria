@@ -6,10 +6,15 @@
 package PaqueteCliente;
 
 import PaqueteRecursos.login;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class cliente {
     /** Botón para agendar una cita médica. */
@@ -28,7 +33,7 @@ public class cliente {
     public cliente() {
         JFrame frameCliente = new JFrame("Menu Cliente");
         frameCliente.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameCliente.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/cliente.png").getImage());
+        frameCliente.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/cliente.png")).getImage());
         frameCliente.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frameCliente.setMinimumSize(new Dimension(800, 600));
 
@@ -36,8 +41,17 @@ public class cliente {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/cliente.jpeg");
-                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+                InputStream imgStream = getClass().getClassLoader().getResourceAsStream("PaqueteRecursos/fondos/cliente.jpeg");
+                if (imgStream != null) {
+                    try {
+                        BufferedImage background = ImageIO.read(imgStream);
+                        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println("No se pudo cargar la imagen.");
+                }
             }
         };
         PCliente.setLayout(new GridBagLayout());

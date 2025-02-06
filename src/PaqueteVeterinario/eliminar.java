@@ -3,10 +3,14 @@ package PaqueteVeterinario;
 import PaqueteRecursos.conexion;
 import PaqueteRecursos.login;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -20,7 +24,7 @@ public class eliminar extends conexion {
 
         JFrame frameEliminarRegistroVeterinario = new JFrame("Eliminar registro del Veterinario");
         frameEliminarRegistroVeterinario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameEliminarRegistroVeterinario.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/elim.png").getImage());
+        frameEliminarRegistroVeterinario.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/elim.png")).getImage());
         frameEliminarRegistroVeterinario.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
         frameEliminarRegistroVeterinario.setMinimumSize(new Dimension(800, 600));
 
@@ -29,8 +33,17 @@ public class eliminar extends conexion {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/vet.jpeg"); // Imagen de fondo
-                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+                InputStream imgStream = getClass().getClassLoader().getResourceAsStream("PaqueteRecursos/fondos/vet.jpeg");
+                if (imgStream != null) {
+                    try {
+                        BufferedImage background = ImageIO.read(imgStream);
+                        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println("No se pudo cargar la imagen.");
+                }
             }
         };
         PEliminarVet.setLayout(new GridBagLayout()); // Diseño responsivo
@@ -99,6 +112,7 @@ public class eliminar extends conexion {
 
                     if (rowsAffected > 0) {
                         JOptionPane.showMessageDialog(PEliminarVet, "Registro eliminado exitosamente.");
+                        textField1.setText("");
                     } else {
                         JOptionPane.showMessageDialog(PEliminarVet, "No se encontró ningún registro con el valor ingresado.");
                     }

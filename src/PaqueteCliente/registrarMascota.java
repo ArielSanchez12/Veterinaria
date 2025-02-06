@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.net.URL;
+
 
 /**
  * La clase {@code registrarMascota} representa la interfaz gráfica para registrar la información de una mascota
@@ -59,11 +61,11 @@ public class registrarMascota extends conexion {
         JFrame frameRegistrarMascota = new JFrame("Registrar Mascota");
         frameRegistrarMascota.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameRegistrarMascota.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frameRegistrarMascota.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/regmascota.png").getImage());
+        frameRegistrarMascota.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/regmascota.png")).getImage());
         frameRegistrarMascota.setMinimumSize(new Dimension(800, 600));
 
         // Crear un panel personalizado que muestra la imagen de fondo
-        BackgroundPanel backgroundPanel = new BackgroundPanel("src/PaqueteRecursos/fondos/cliente.jpeg");
+        BackgroundPanel backgroundPanel = new BackgroundPanel("/PaqueteRecursos/fondos/cliente.jpeg");
         backgroundPanel.setLayout(new BorderLayout());
 
         // Hacer el panel PAgendar transparente para ver la imagen de fondo
@@ -249,9 +251,15 @@ public class registrarMascota extends conexion {
 
         public BackgroundPanel(String imagePath) {
             try {
-                backgroundImage = new ImageIcon(imagePath).getImage();
+                // Cargar imagen desde el classpath
+                URL imageUrl = getClass().getResource(imagePath);
+                if (imageUrl != null) {
+                    backgroundImage = new ImageIcon(imageUrl).getImage();
+                } else {
+                    System.out.println("No se pudo encontrar la imagen: " + imagePath);
+                }
             } catch (Exception e) {
-                System.out.println("No se pudo cargar la imagen de fondo.");
+                e.printStackTrace();
             }
 
             // Redibujar la imagen cuando la ventana cambie de tamaño
@@ -259,7 +267,7 @@ public class registrarMascota extends conexion {
                 @Override
                 public void componentResized(ComponentEvent e) {
                     if (backgroundImage != null) {
-                        backgroundImage = new ImageIcon(imagePath).getImage().getScaledInstance(
+                        backgroundImage = backgroundImage.getScaledInstance(
                                 getWidth(), getHeight(), Image.SCALE_SMOOTH);
                         repaint();
                     }

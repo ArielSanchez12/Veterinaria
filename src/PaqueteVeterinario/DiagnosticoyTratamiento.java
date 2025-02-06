@@ -1,6 +1,6 @@
 package PaqueteVeterinario;
 
-import PaqueteCliente.registrarMascota;
+
 import PaqueteRecursos.conexion;
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,12 +29,12 @@ public class DiagnosticoyTratamiento extends conexion {
         JFrame frameDiagnosticoTratamiento = new JFrame("Aplicar el Diagnostico y el Tratamiento a la mascota");
         frameDiagnosticoTratamiento.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameDiagnosticoTratamiento.setExtendedState(JFrame.MAXIMIZED_BOTH); // Pantalla completa
-        frameDiagnosticoTratamiento.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/veterinario.png").getImage());
+        frameDiagnosticoTratamiento.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/veterinario.png")).getImage());
         frameDiagnosticoTratamiento.setMinimumSize(new Dimension(800, 600));
         PDiagTrat.setPreferredSize(new Dimension(700, 450));
 
         // Crear un panel personalizado que muestra la imagen de fondo
-        registrarMascota.BackgroundPanel backgroundPanel = new registrarMascota.BackgroundPanel("src/PaqueteRecursos/fondos/vet.jpeg");
+        BackgroundPanel backgroundPanel = new BackgroundPanel("/PaqueteRecursos/fondos/vet.jpeg");
         backgroundPanel.setLayout(new BorderLayout());
 
         // Hacer el panel PAgendar transparente para ver la imagen de fondo
@@ -169,6 +170,9 @@ public class DiagnosticoyTratamiento extends conexion {
                         pstmtActualizar.setInt(3, Integer.parseInt(codigoCita));
                         pstmtActualizar.executeUpdate();
                         JOptionPane.showMessageDialog(null, "Diagnóstico y tratamiento actualizados con éxito.");
+                        textField1.setText("");
+                        textArea1.setText("");
+                        textArea2.setText("");
                     } else {
                         // Si no existe, se inserta
                         pstmtInsertar.setInt(1, Integer.parseInt(codigoCita));
@@ -176,11 +180,13 @@ public class DiagnosticoyTratamiento extends conexion {
                         pstmtInsertar.setString(3, tratamiento);
                         pstmtInsertar.executeUpdate();
                         JOptionPane.showMessageDialog(null, "Diagnóstico y tratamiento guardados con éxito.");
+                        textField1.setText("");
+                        textArea1.setText("");
+                        textArea2.setText("");
                     }
                 }
             }
-            textArea1.setText("");
-            textArea2.setText("");
+
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -188,14 +194,20 @@ public class DiagnosticoyTratamiento extends conexion {
         }
     }
 
-    static class BackgroundPanel extends JPanel {
+    public static class BackgroundPanel extends JPanel {
         private Image backgroundImage;
 
         public BackgroundPanel(String imagePath) {
             try {
-                backgroundImage = new ImageIcon(imagePath).getImage();
+                // Cargar imagen desde el classpath
+                URL imageUrl = getClass().getResource(imagePath);
+                if (imageUrl != null) {
+                    backgroundImage = new ImageIcon(imageUrl).getImage();
+                } else {
+                    System.out.println("No se pudo encontrar la imagen: " + imagePath);
+                }
             } catch (Exception e) {
-                System.out.println("No se pudo cargar la imagen de fondo.");
+                e.printStackTrace();
             }
 
             // Redibujar la imagen cuando la ventana cambie de tamaño
@@ -203,7 +215,7 @@ public class DiagnosticoyTratamiento extends conexion {
                 @Override
                 public void componentResized(ComponentEvent e) {
                     if (backgroundImage != null) {
-                        backgroundImage = new ImageIcon(imagePath).getImage().getScaledInstance(
+                        backgroundImage = backgroundImage.getScaledInstance(
                                 getWidth(), getHeight(), Image.SCALE_SMOOTH);
                         repaint();
                     }

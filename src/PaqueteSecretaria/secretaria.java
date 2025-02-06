@@ -1,10 +1,15 @@
 package PaqueteSecretaria;
 
 import PaqueteRecursos.login;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Clase que representa el menú principal de la secretaria de la veterinaria.
@@ -21,7 +26,7 @@ public class secretaria {
 
         JFrame frameSecretaria = new JFrame("Menu Secretaria");
         frameSecretaria.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameSecretaria.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/secretaria.png").getImage());
+        frameSecretaria.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/secretaria.png")).getImage());
         frameSecretaria.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
         frameSecretaria.setMinimumSize(new Dimension(800, 600));
 
@@ -30,8 +35,17 @@ public class secretaria {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/secre.jpeg"); // Imagen de fondo
-                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+                InputStream imgStream = getClass().getClassLoader().getResourceAsStream("PaqueteRecursos/fondos/secre.jpeg");
+                if (imgStream != null) {
+                    try {
+                        BufferedImage background = ImageIO.read(imgStream);
+                        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println("No se pudo cargar la imagen.");
+                }
             }
         };
         PSecretaria.setLayout(new GridBagLayout()); // Diseño responsivo

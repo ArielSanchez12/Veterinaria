@@ -1,10 +1,15 @@
 package PaqueteVeterinario;
 
 import PaqueteRecursos.login;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Clase que representa el menú principal del veterinario en el sistema.
@@ -21,8 +26,8 @@ public class veterinario {
     public veterinario() {
         JFrame frameVeterinario = new JFrame("Menu Veterinario");
         frameVeterinario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameVeterinario.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/veterinario.png").getImage());
-        frameVeterinario.setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa
+        frameVeterinario.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/veterinario.png")).getImage());
+        frameVeterinario.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frameVeterinario.setMinimumSize(new Dimension(800, 600));
 
         // Panel principal con fondo
@@ -30,8 +35,17 @@ public class veterinario {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/vet.jpeg"); // Imagen de fondo
-                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+                InputStream imgStream = getClass().getClassLoader().getResourceAsStream("PaqueteRecursos/fondos/vet.jpeg");
+                if (imgStream != null) {
+                    try {
+                        BufferedImage background = ImageIO.read(imgStream);
+                        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println("No se pudo cargar la imagen.");
+                }
             }
         };
         PVeterinario.setLayout(new GridBagLayout()); // Diseño responsivo

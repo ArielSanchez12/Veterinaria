@@ -1,9 +1,13 @@
 package PaqueteRecursos;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -36,7 +40,7 @@ public class registro extends conexion {
     public registro() {
         JFrame frameRegistroClientesNuevos = new JFrame("Registro");
         frameRegistroClientesNuevos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameRegistroClientesNuevos.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/nuevo.png").getImage());
+        frameRegistroClientesNuevos.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/nuevo.png")).getImage());
         frameRegistroClientesNuevos.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frameRegistroClientesNuevos.setMinimumSize(new Dimension(800, 600));
 
@@ -45,8 +49,17 @@ public class registro extends conexion {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/log-reg.jpeg");
-                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+                InputStream imgStream = getClass().getClassLoader().getResourceAsStream("PaqueteRecursos/fondos/log-reg.jpeg");
+                if (imgStream != null) {
+                    try {
+                        BufferedImage background = ImageIO.read(imgStream);
+                        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println("No se pudo cargar la imagen.");
+                }
             }
         };
         PRegistro.setLayout(new GridBagLayout());

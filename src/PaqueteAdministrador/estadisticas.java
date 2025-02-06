@@ -35,7 +35,7 @@ public class estadisticas extends conexion {
         frameEstadisticasAdministrador.setSize(1000, 600);
         frameEstadisticasAdministrador.setPreferredSize(new Dimension(1000, 600));
         frameEstadisticasAdministrador.setLocationRelativeTo(null);
-        frameEstadisticasAdministrador.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/graficas.png").getImage());
+        frameEstadisticasAdministrador.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/graficas.png")).getImage());
         frameEstadisticasAdministrador.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frameEstadisticasAdministrador.pack();
         frameEstadisticasAdministrador.setVisible(true);

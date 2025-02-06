@@ -41,7 +41,7 @@ public class reporteFinanciero extends conexion {
         frameReporteFinanciero.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameReporteFinanciero.setSize(500, 300);
         frameReporteFinanciero.setPreferredSize(new Dimension(500, 300));
-        frameReporteFinanciero.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/graficas.png").getImage());
+        frameReporteFinanciero.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/graficas.png")).getImage());
         frameReporteFinanciero.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frameReporteFinanciero.setLocationRelativeTo(null);
         frameReporteFinanciero.pack();

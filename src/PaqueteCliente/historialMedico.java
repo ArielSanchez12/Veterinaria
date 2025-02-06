@@ -3,6 +3,8 @@ package PaqueteCliente;
 import PaqueteRecursos.conexion;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -10,7 +12,10 @@ import java.awt.*;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 
 /**
@@ -35,7 +40,7 @@ public class historialMedico extends conexion {
     public historialMedico() {
         JFrame frameHistorialMedicoCliente = new JFrame("Historial Medico");
         frameHistorialMedicoCliente.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameHistorialMedicoCliente.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/historial.png").getImage());
+        frameHistorialMedicoCliente.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/historial.png")).getImage());
         frameHistorialMedicoCliente.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frameHistorialMedicoCliente.setMinimumSize(new Dimension(800, 600));
 
@@ -44,8 +49,17 @@ public class historialMedico extends conexion {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon imagen = new ImageIcon("src/PaqueteRecursos/fondos/cliente.jpeg"); // Imagen de fondo
-                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+                InputStream imgStream = getClass().getClassLoader().getResourceAsStream("PaqueteRecursos/fondos/cliente.jpeg");
+                if (imgStream != null) {
+                    try {
+                        BufferedImage background = ImageIO.read(imgStream);
+                        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println("No se pudo cargar la imagen.");
+                }
             }
         };
         PHistorial.setLayout(new GridBagLayout());

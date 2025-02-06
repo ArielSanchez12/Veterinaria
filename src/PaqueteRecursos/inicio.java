@@ -1,9 +1,13 @@
 package PaqueteRecursos;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Clase que representa la ventana de inicio de la aplicación.
@@ -41,7 +45,7 @@ public class inicio {
         frameInicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameInicio.setSize(1000, 600);
         frameInicio.setLocationRelativeTo(null);
-        frameInicio.setIconImage(new ImageIcon("src/PaqueteRecursos/iconos/inicio.png").getImage());
+        frameInicio.setIconImage(new ImageIcon(getClass().getResource("/PaqueteRecursos/iconos/inicio.png")).getImage());
         frameInicio.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // Configuración del panel de inicio con imagen de fondo
@@ -49,8 +53,17 @@ public class inicio {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon background = new ImageIcon("src/PaqueteRecursos/fondos/inicio.jpeg");
-                g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), this);
+                InputStream imgStream = getClass().getClassLoader().getResourceAsStream("PaqueteRecursos/fondos/inicio.jpeg");
+                if (imgStream != null) {
+                    try {
+                        BufferedImage background = ImageIO.read(imgStream);
+                        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println("No se pudo cargar la imagen.");
+                }
             }
 
             @Override
